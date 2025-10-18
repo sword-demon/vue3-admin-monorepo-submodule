@@ -1,0 +1,80 @@
+/* 自定义全局样式变量 */
+
+:root {
+  /* 布局尺寸 */
+  --app-header-height: 60px;
+  --app-sidebar-width: 220px;
+  --app-sidebar-collapsed-width: 64px;
+  --app-tabs-height: 44px;
+  --app-footer-height: 48px;
+
+  /* 间距 */
+  --app-padding-base: 16px;
+  --app-padding-large: 24px;
+  --app-padding-small: 12px;
+  --app-padding-xs: 8px;
+  --app-margin-base: 16px;
+  --app-margin-large: 24px;
+  --app-margin-small: 12px;
+  --app-margin-xs: 8px;
+
+  /* 动画时长 */
+  --app-transition-fast: 0.2s;
+  --app-transition-base: 0.3s;
+  --app-transition-slow: 0.4s;
+
+  /* 层级 */
+  --app-z-index-header: 1000;
+  --app-z-index-sidebar: 1001;
+  --app-z-index-tabs: 999;
+  --app-z-index-drawer: 2000;
+  --app-z-index-modal: 3000;
+  --app-z-index-notification: 4000;
+  --app-z-index-message: 5000;
+
+  /* 自定义颜色 */
+  --app-bg-color: #f5f7fa;
+  --app-content-bg: #fff;
+  --app-hover-bg: rgb(64 158 255 / 8%);
+  --app-active-bg: rgb(64 158 255 / 12%);
+
+  /* 边框 */
+  --app-border-style: 1px solid var(--el-border-color);
+  --app-border-light: 1px solid var(--el-border-color-light);
+
+  /* 圆角 */
+  --app-border-radius-small: 2px;
+  --app-border-radius-base: 4px;
+  --app-border-radius-large: 8px;
+  --app-border-radius-round: 16px;
+
+  /* Logo */
+  --app-logo-width: 180px;
+  --app-logo-height: 48px;
+}
+
+/* 暗黑模式 */
+html.dark {
+  --app-bg-color: #0a0a0a;
+  --app-content-bg: #141414;
+  --app-hover-bg: rgb(64 158 255 / 15%);
+  --app-active-bg: rgb(64 158 255 / 25%);
+}
+
+/* 灰色模式(哀悼模式) */
+html.gray-mode {
+  filter: grayscale(1);
+  filter: grayscale(1);
+  filter: grayscale(1);
+  filter: grayscale(1);
+  filter: grayscale(1);
+}
+
+/* 色弱模式 */
+html.color-weakness {
+  filter: invert(0.8);
+  filter: invert(0.8);
+  filter: invert(0.8);
+  filter: invert(0.8);
+  filter: invert(0.8);
+}

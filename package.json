@@ -1,0 +1,51 @@
+{
+  "name": "vue3-admin-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Vue3 后台管理系统 Monorepo",
+  "scripts": {
+    "dev": "pnpm --filter @vue3-admin/admin dev",
+    "build": "pnpm --filter @vue3-admin/admin build",
+    "preview": "pnpm --filter @vue3-admin/admin preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "type-check": "pnpm -r run type-check",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/js": "^9.37.0",
+    "@types/eslint__js": "^9.14.0",
+    "eslint": "^9.37.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-vue": "^10.5.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
+    "prettier": "^3.6.2",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard": "^39.0.1",
+    "stylelint-order": "^7.0.0",
+    "typescript-eslint": "^8.46.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss,vue}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
+}

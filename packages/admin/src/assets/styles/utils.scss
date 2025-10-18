@@ -1,0 +1,253 @@
+/* 通用工具类样式 */
+
+/* 布局相关 */
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+/* 间距相关 */
+.p-0 {
+  padding: 0;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.p-4 {
+  padding: var(--app-padding-base);
+}
+
+.p-6 {
+  padding: var(--app-padding-large);
+}
+
+.m-4 {
+  margin: var(--app-margin-base);
+}
+
+.m-6 {
+  margin: var(--app-margin-large);
+}
+
+/* 文本相关 */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 光标样式 */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+/* 圆角 */
+.rounded {
+  border-radius: var(--app-border-radius-base);
+}
+
+.rounded-lg {
+  border-radius: var(--app-border-radius-large);
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+/* 阴影 */
+.shadow {
+  box-shadow: var(--el-box-shadow-light);
+}
+
+.shadow-lg {
+  box-shadow: var(--el-box-shadow);
+}
+
+/* 溢出处理 */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+/* 定位 */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
+/* 显示/隐藏 */
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* 过渡动画 */
+.transition {
+  transition: all var(--app-transition-base);
+}
+
+.transition-fast {
+  transition: all var(--app-transition-fast);
+}
+
+/* 容器 */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--app-padding-base);
+  padding-right: var(--app-padding-base);
+}
+
+/* 卡片 */
+.card {
+  background-color: var(--app-content-bg);
+  border-radius: var(--app-border-radius-base);
+  padding: var(--app-padding-base);
+  box-shadow: var(--el-box-shadow-lighter);
+}
+
+/* 分割线 */
+.divider {
+  height: 1px;
+  background-color: var(--el-border-color);
+  margin: var(--app-margin-base) 0;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--app-padding-large);
+  color: var(--el-text-color-secondary);
+}
+
+/* 加载状态 */
+.loading-mask {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  background-color: rgb(255 255 255 / 90%);
+}
+
+html.dark .loading-mask {
+  background-color: rgb(0 0 0 / 80%);
+}
+
+/* 悬停效果 */
+.hover-bg:hover {
+  background-color: var(--app-hover-bg);
+}
+
+.hover-primary:hover {
+  color: var(--el-color-primary);
+}
+
+/* 滚动条优化 */
+.custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(144 147 153 / 30%);
+    border-radius: 3px;
+
+    &:hover {
+      background-color: rgb(144 147 153 / 50%);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
