@@ -68,5 +68,14 @@ export default {
     'declaration-block-trailing-semicolon': 'always',
     'declaration-block-single-line-max-declarations': 1,
   },
-  ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', 'dist/**', 'node_modules/**'],
+  ignoreFiles: [
+    '**/*.js',
+    '**/*.jsx',
+    '**/*.tsx',
+    '**/*.ts',
+    '**/*.vue',
+    'dist/**',
+    'node_modules/**',
+    'packages/admin/src/**/*',
+  ],
 }
