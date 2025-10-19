@@ -5,7 +5,9 @@
       <div class="login-banner">
         <div class="banner-content">
           <h1 class="banner-title">Vue3 Admin Monorepo</h1>
-          <p class="banner-description">基于 Vue3 + TypeScript + Vite + Pinia 的现代化后台管理系统</p>
+          <p class="banner-description">
+            基于 Vue3 + TypeScript + Vite + Pinia 的现代化后台管理系统
+          </p>
           <div class="banner-features">
             <div class="feature-item">
               <el-icon><Check /></el-icon>
@@ -80,7 +82,6 @@
                 @click="handleLogin"
               >
                 {{ loading ? '登录中...' : '登录' }}
-
               </el-button>
             </el-form-item>
 
@@ -100,21 +101,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive }
-
- from 'vue'
-import { useRouter, useRoute }
-
- from 'vue-router'
-import { ElMessage, type FormInstance, type FormRules }
-
- from 'element-plus'
-import { User, Lock, Check, InfoFilled }
-
- from '@element-plus/icons-vue'
-import { useUserStore }
-
- from '@/stores'
+import { ref, reactive } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { User, Lock, Check, InfoFilled } from '@element-plus/icons-vue'
+import { useUserStore } from '@/stores'
 import type { LoginParams } from '@/types/user'
 
 const router = useRouter()
@@ -137,16 +128,18 @@ const formData = reactive<LoginParams>({
 // 验证规则
 const rules: FormRules = {
   username: [
-    {;
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, max: 20, message: '用户名长度在 3 到 20 个字符', trigger: 'blur' },
+  ],
   password: [
-    {; required: true,; min: 6,; max: 32,; message: '密码长度在 6 到 32 个字符',; trigger: 'blur' },
+    { required: true, min: 6, max: 32, message: '密码长度在 6 到 32 个字符', trigger: 'blur' },
   ],
 }
 
 /**
  * 登录
  */
-const handlelogin = async () => {
+const handleLogin = async () => {
   if (!formRef.value) return
 
   // 验证表单
@@ -166,18 +159,13 @@ const handlelogin = async () => {
 
     // 跳转到目标页面
     router.push(redirect)
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     console.error('登录失败:', error)
     ElMessage.error(error?.message || '登录失败,请检查用户名和密码')
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
-
 </script>
 
 <style scoped lang="scss">

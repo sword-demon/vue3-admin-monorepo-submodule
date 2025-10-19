@@ -52,34 +52,26 @@
         </el-icon>
       </div>
 
-      <span class="slider-text">{{ sliderText }}
-
-</span>
+      <span class="slider-text">{{ sliderText }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount }
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ElIcon } from 'element-plus'
+import { Refresh, DArrowRight, SuccessFilled, CircleCloseFilled } from '@element-plus/icons-vue'
 
- from 'vue'
-import { ElIcon }
-
- from 'element-plus'
-import { Refresh, DArrowRight, SuccessFilled, CircleCloseFilled }
-
- from '@element-plus/icons-vue'
-
-interface props {
+interface Props {
   /** 画布宽度 */
   width?: number
-  /** 画布高度 */;
+  /** 画布高度 */
   height?: number
-  /** 滑块大小 */;
+  /** 滑块大小 */
   blockSize?: number
-  /** 验证允许的误差范围 */;
+  /** 验证允许的误差范围 */
   tolerance?: number
-  /** 背景图URL */;
+  /** 背景图URL */
   imageUrl?: string
 }
 
@@ -91,8 +83,10 @@ const props = withDefaults(defineProps<Props>(), {
   imageUrl: '',
 })
 
-interface Emits { data: {; x: number;; y: number }): void
-  (;e: 'refresh'): void
+interface Emits {
+  (e: 'success', data: { x: number; y: number }): void
+  (e: 'failed'): void
+  (e: 'refresh'): void
 }
 
 const emit = defineEmits<Emits>()
@@ -209,14 +203,7 @@ const loadImage = (): void => {
 
   // 使用提供的图片URL或随机图片
   img.src =
-    props.imageUrl ||
-    `https://picsum.photos/${props.width}
-
-/${props.height}
-
-?random=${Math.random()}
-
-`
+    props.imageUrl || `https://picsum.photos/${props.width}/${props.height}?random=${Math.random()}`
 
   img.onload = () => {
     drawImage(img)
@@ -243,12 +230,12 @@ const handleDragStart = (e: MouseEvent | TouchEvent): void => {
   if (isSuccess.value || isFailed.value) return
 
   isDragging.value = true
-  startX.value = 'touches' in e ? e.touches[0].clientX : e.clientx
+  startX.value = 'touches' in e ? e.touches[0].clientX : e.clientX
 
-  document.addeventlistener('mousemove', handledragmove)
-  document.addeventlistener('mouseup', handledragend)
-  document.addeventlistener('touchmove', handledragmove)
-  document.addeventlistener('touchend', handledragend)returnisDragging.valuetruestartX.valueinee.touches0.clientX
+  document.addEventListener('mousemove', handleDragMove)
+  document.addEventListener('mouseup', handleDragEnd)
+  document.addEventListener('touchmove', handleDragMove)
+  document.addEventListener('touchend', handleDragEnd)
 }
 
 /**
@@ -259,14 +246,14 @@ const handleDragMove = (e: MouseEvent | TouchEvent): void => {
 
   e.preventDefault()
 
-  const currentX = 'touches' in e ? e.touches[0].clientX : e.clientx
-  let movex = currentx - startx.value
+  const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX
+  let moveX = currentX - startX.value
 
   // 限制滑块移动范围
-  if (movex < 0) movex = 0
-  if (movex > props.width - props.blocksize) movex = props.width - props.blocksize
+  if (moveX < 0) moveX = 0
+  if (moveX > props.width - props.blockSize) moveX = props.width - props.blockSize
 
-  sliderleft.value = movexreturne.preventDefaultconstcurrentXinee.touches0.clientX
+  sliderLeft.value = moveX
 }
 
 /**
@@ -296,9 +283,7 @@ const verify = (): void => {
     // 验证成功
     isSuccess.value = true
     emit('success', { x: blockX.value, y: blockY.value })
-  }
-
- else {
+  } else {
     // 验证失败
     isFailed.value = true
     emit('failed')

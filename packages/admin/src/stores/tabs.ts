@@ -86,7 +86,26 @@ export const useTabsStore = defineStore('tabs', () => {
 
     const newTab = createTabFromRoute(route)
 
-    // 检查是否已存在
+    // 对于首页，特殊处理去重逻辑
+    if (newTab.title === '首页' || newTab.affix) {
+      // 检查是否已存在相同标题的固定标签
+      const existingHomeIndex = tabs.value.findIndex(
+        (tab) => tab.title === newTab.title && tab.affix
+      )
+
+      if (existingHomeIndex !== -1) {
+        // 如果路径不同，更新路径为最新的
+        if (tabs.value[existingHomeIndex].path !== newTab.path) {
+          tabs.value[existingHomeIndex].path = newTab.path
+          tabs.value[existingHomeIndex].fullPath = newTab.fullPath
+        }
+        // 设置为激活标签
+        activeTabPath.value = tabs.value[existingHomeIndex].path
+        return
+      }
+    }
+
+    // 检查是否已存在相同路径的标签
     const existIndex = tabs.value.findIndex((tab) => tab.path === newTab.path)
 
     if (existIndex !== -1) {
@@ -200,9 +219,7 @@ export const useTabsStore = defineStore('tabs', () => {
     const findAffixTabs = (targetRoutes: RouteRecordRaw[], basePath = ''): void => {
       targetRoutes.forEach((route) => {
         if (route.meta?.affix && route.meta?.title) {
-          const joinedPath = route.path.startsWith('/')
-            ? route.path
-            : `${basePath}/${route.path}`
+          const joinedPath = route.path.startsWith('/') ? route.path : `${basePath}/${route.path}`
           const normalizedPath = joinedPath.replace(/\/{2,}/g, '/')
           const fullPath = normalizedPath.replace(/\/+$/, '') || '/'
           affixTabs.push({
@@ -215,7 +232,9 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (route.children) {
-          const childJoinedPath = route.path.startsWith('/') ? route.path : `${basePath}/${route.path}`
+          const childJoinedPath = route.path.startsWith('/')
+            ? route.path
+            : `${basePath}/${route.path}`
           const childBasePath = childJoinedPath.replace(/\/{2,}/g, '/')
           findAffixTabs(route.children, childBasePath)
         }
@@ -230,6 +249,35 @@ export const useTabsStore = defineStore('tabs', () => {
         tabs.value.unshift(affixTab)
       }
     })
+  }
+
+  /**
+   * 清理重复的标签
+   */
+  const cleanDuplicateTabs = (): void => {
+    const uniqueTabs: TabItem[] = []
+    const seenPaths = new Set<string>()
+    const seenTitles = new Set<string>()
+
+    tabs.value.forEach((tab) => {
+      // 对于首页和固定标签，按标题去重
+      if ((tab.title === '首页' || tab.affix) && seenTitles.has(tab.title)) {
+        return
+      }
+
+      // 对于其他标签，按路径去重
+      if (seenPaths.has(tab.path)) {
+        return
+      }
+
+      uniqueTabs.push(tab)
+      seenPaths.add(tab.path)
+      if (tab.title === '首页' || tab.affix) {
+        seenTitles.add(tab.title)
+      }
+    })
+
+    tabs.value = uniqueTabs
   }
 
   /**
@@ -250,6 +298,9 @@ export const useTabsStore = defineStore('tabs', () => {
     { deep: true }
   )
 
+  // 初始化时清理重复标签
+  cleanDuplicateTabs()
+
   return {
     // 状态
     tabs,
@@ -265,6 +316,7 @@ export const useTabsStore = defineStore('tabs', () => {
     setActiveTab,
     findTab,
     initAffixTabs,
+    cleanDuplicateTabs,
     clearTabs,
   }
 })

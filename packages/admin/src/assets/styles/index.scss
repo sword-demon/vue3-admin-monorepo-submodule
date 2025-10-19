@@ -1,8 +1,8 @@
-/* 导入样式变量 - 使用现代 @forward 语法 */
-@forward './variables.scss';
-@forward './element-variables.scss';
-@forward './dark.scss';
-@forward './utils.scss';
+/* 导入样式变量 */
+@use './variables.scss';
+@use './element-variables.scss';
+@use './dark.scss';
+@use './utils.scss';
 
 /* 重置样式 */
 *,
@@ -21,9 +21,9 @@ body {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--app-bg-color);
@@ -158,4 +158,3 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
-

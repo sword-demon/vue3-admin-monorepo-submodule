@@ -77,22 +77,14 @@
           生成报表
         </el-button>
 
-        <el-button
-          type="success"
-          :disabled="selectedIds.length === 0"
-          @click="handleBatchExport"
-        >
+        <el-button type="success" :disabled="selectedIds.length === 0" @click="handleBatchExport">
           <template #icon>
             <el-icon><Download /></el-icon>
           </template>
           批量导出
         </el-button>
 
-        <el-button
-          type="danger"
-          :disabled="selectedIds.length === 0"
-          @click="handleBatchDelete"
-        >
+        <el-button type="danger" :disabled="selectedIds.length === 0" @click="handleBatchDelete">
           <template #icon>
             <el-icon><Delete /></el-icon>
           </template>
@@ -127,7 +119,7 @@
             <span class="text-sm text-gray-600">
               {{ row.startDate }}
 
- ~ {{ row.endDate }}
+              ~ {{ row.endDate }}
             </span>
           </template>
         </el-table-column>
@@ -191,14 +183,7 @@
               重新生成
             </el-button>
 
-            <el-button
-              type="danger"
-              link
-              size="small"
-              @click="handleDelete(row)"
-            >
-              删除
-            </el-button>
+            <el-button type="danger" link size="small" @click="handleDelete(row)"> 删除 </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -217,31 +202,14 @@
     </el-card>
 
     <!-- 生成报表对话框 -->
-    <el-dialog
-      v-model="dialogVisible"
-      title="生成报表"
-      width="600px"
-      :close-on-click-modal="false"
-    >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        :rules="formRules"
-        label-width="100px"
-      >
+    <el-dialog v-model="dialogVisible" title="生成报表" width="600px" :close-on-click-modal="false">
+      <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">
         <el-form-item label="报表名称" prop="name">
-          <el-input
-            v-model="formData.name"
-            placeholder="请输入报表名称"
-          />
+          <el-input v-model="formData.name" placeholder="请输入报表名称" />
         </el-form-item>
 
         <el-form-item label="报表类型" prop="type">
-          <el-select
-            v-model="formData.type"
-            placeholder="请选择报表类型"
-            style="width: 100%"
-          >
+          <el-select v-model="formData.type" placeholder="请选择报表类型" style="width: 100%">
             <el-option label="销售报表" value="sales">
               <div class="flex items-center justify-between">
                 <span>销售报表</span>
@@ -327,25 +295,20 @@
     </el-dialog>
 
     <!-- 预览对话框 -->
-    <el-dialog
-      v-model="previewVisible"
-      title="报表预览"
-      width="80%"
-      top="5vh"
-    >
+    <el-dialog v-model="previewVisible" title="报表预览" width="80%" top="5vh">
       <div class="preview-container">
         <div class="preview-header">
           <h3>{{ currentReport?.name }}</h3>
           <div class="preview-info">
             <span>类型: {{ getReportTypeName(currentReport?.type || '') }}</span>
             <span class="mx-3">|</span>
-            <span>周期: {{ currentReport?.startDate }}
+            <span
+              >周期: {{ currentReport?.startDate }}
 
- ~ {{ currentReport?.endDate }}</span>
+              ~ {{ currentReport?.endDate }}</span
+            >
             <span class="mx-3">|</span>
-            <span>生成时间: {{ currentReport?.createdAt }}
-
-</span>
+            <span>生成时间: {{ currentReport?.createdAt }} </span>
           </div>
         </div>
         <div class="preview-content">
@@ -361,15 +324,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted }
-
- from 'vue'
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules }
-
- from 'element-plus'
-import { Search, Refresh, DocumentAdd, Download, Delete, Document }
-
- from '@element-plus/icons-vue'
+import { ref, reactive, onMounted } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
+import { Search, Refresh, DocumentAdd, Download, Delete, Document } from '@element-plus/icons-vue'
 import {
   getReportList,
   createReport,
@@ -378,7 +335,7 @@ import {
   regenerateReport,
   downloadReport,
   type Report,
-  type ReportCreateParams
+  type ReportCreateParams,
 } from '@/api/report'
 
 // 状态
@@ -421,14 +378,12 @@ const formData = reactive({
 // 表单验证规则
 const formRules: FormRules = {
   name: [
-    {;
-  type: [
-    {;
-  dateRange: [
-    {;
-  format: [
-    {; required: true,; message: '请选择导出格式',; trigger: 'change' },
+    { required: true, message: '请输入报表名称', trigger: 'blur' },
+    { min: 2, max: 50, message: '报表名称长度在 2 到 50 个字符', trigger: 'blur' },
   ],
+  type: [{ required: true, message: '请选择报表类型', trigger: 'change' }],
+  dateRange: [{ required: true, message: '请选择日期范围', trigger: 'change' }],
+  format: [{ required: true, message: '请选择导出格式', trigger: 'change' }],
 }
 
 /**
@@ -436,10 +391,10 @@ const formRules: FormRules = {
  */
 const getReportTypeTag = (type: string): string => {
   const typeMap: Record<string, string> = {
-    sales: 'success',;
-    user: 'primary',;
-    content: 'warning',;
-    visit: 'info',;
+    sales: 'success',
+    user: 'primary',
+    content: 'warning',
+    visit: 'info',
     financial: 'danger',
   }
   return typeMap[type] || ''
@@ -450,10 +405,10 @@ const getReportTypeTag = (type: string): string => {
  */
 const getReportTypeName = (type: string): string => {
   const typeMap: Record<string, string> = {
-    sales: '销售报表',;
-    user: '用户报表',;
-    content: '内容报表',;
-    visit: '访问报表',;
+    sales: '销售报表',
+    user: '用户报表',
+    content: '内容报表',
+    visit: '访问报表',
     financial: '财务报表',
   }
   return typeMap[type] || type
@@ -464,8 +419,8 @@ const getReportTypeName = (type: string): string => {
  */
 const getStatusType = (status: string): string => {
   const statusMap: Record<string, string> = {
-    generating: 'warning',;
-    completed: 'success',;
+    generating: 'warning',
+    completed: 'success',
     failed: 'danger',
   }
   return statusMap[status] || ''
@@ -476,8 +431,8 @@ const getStatusType = (status: string): string => {
  */
 const getStatusText = (status: string): string => {
   const statusMap: Record<string, string> = {
-    generating: '生成中',;
-    completed: '已完成',;
+    generating: '生成中',
+    completed: '已完成',
     failed: '失败',
   }
   return statusMap[status] || status
@@ -487,10 +442,12 @@ const getStatusText = (status: string): string => {
  * 格式化文件大小
  */
 const formatFileSize = (bytes: number): string => {
-  if (bytes < 1024) return `${bytes}
+  if (bytes < 1024)
+    return `${bytes}
 
  b`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)}
+  if (bytes < 1024 * 1024)
+    return `${(bytes / 1024).toFixed(2)}
 
  kb`
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
@@ -499,19 +456,21 @@ const formatFileSize = (bytes: number): string => {
 /**
  * 获取报表列表
  */
-const fetchreportlist = async () => {
+const fetchReportList = async () => {
   loading.value = true
   try {
     const params = {
-      page: pagination.page,;
-      pageSize: pagination.pagesize,;
-      name: searchform.name || undefined,;
-      type: searchform.type || undefined,;
-      status: searchform.status || undefined,;
-      dateRange: searchform.daterange ? [
-        searchform.daterange[0].toisostring().slice(0, 10),
-        searchform.daterange[1].toisostring();.slice(0, 10)
-      ] : undefined,
+      page: pagination.page,
+      pageSize: pagination.pageSize,
+      name: searchForm.name || undefined,
+      type: searchForm.type || undefined,
+      status: searchForm.status || undefined,
+      dateRange: searchForm.dateRange
+        ? [
+            searchForm.dateRange[0].toISOString().slice(0, 10),
+            searchForm.dateRange[1].toISOString().slice(0, 10),
+          ]
+        : undefined,
     }
 
     const response = await getReportList(params)
@@ -519,9 +478,7 @@ const fetchreportlist = async () => {
     pagination.total = response.total
   } catch (error) {
     ElMessage.error('获取报表列表失败')
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -529,7 +486,7 @@ const fetchreportlist = async () => {
 /**
  * 搜索
  */
-const handlesearch = () => {
+const handleSearch = () => {
   pagination.page = 1
   fetchReportList()
 }
@@ -537,7 +494,7 @@ const handlesearch = () => {
 /**
  * 重置搜索
  */
-const handlereset = () => {
+const handleReset = () => {
   searchForm.name = ''
   searchForm.type = ''
   searchForm.status = ''
@@ -548,14 +505,14 @@ const handlereset = () => {
 /**
  * 选择变化
  */
-const handleselectionchange = (selection: Report[]) => {
-  selectedIds.value = selection.map(item => item.id)
+const handleSelectionChange = (selection: Report[]) => {
+  selectedIds.value = selection.map((item) => item.id)
 }
 
 /**
  * 生成报表
  */
-const handlegenerate = () => {
+const handleGenerate = () => {
   dialogVisible.value = true
   resetForm()
 }
@@ -563,7 +520,7 @@ const handlegenerate = () => {
 /**
  * 预览
  */
-const handlepreview = (row: Report) => {
+const handlePreview = (row: Report) => {
   currentReport.value = row
   previewVisible.value = true
 }
@@ -571,7 +528,7 @@ const handlepreview = (row: Report) => {
 /**
  * 下载
  */
-const handledownload = async (row: Report) => {
+const handleDownload = async (row: Report) => {
   try {
     const downloadInfo = await downloadReport(row.id)
     // 创建下载链接
@@ -588,20 +545,14 @@ const handledownload = async (row: Report) => {
 /**
  * 重新生成
  */
-const handleregenerate = async (row: Report) => {
+const handleRegenerate = async (row: Report) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要重新生成报表 "${row.name}" 吗?`,
-      '提示',
-      { type: 'warning' }
-    )
+    await ElMessageBox.confirm(`确定要重新生成报表 "${row.name}" 吗?`, '提示', { type: 'warning' })
 
     await regenerateReport(row.id)
     ElMessage.success('已提交重新生成请求')
     fetchReportList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('重新生成失败')
     }
@@ -611,20 +562,14 @@ const handleregenerate = async (row: Report) => {
 /**
  * 删除
  */
-const handledelete = async (row: Report) => {
+const handleDelete = async (row: Report) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除报表 "${row.name}" 吗?`,
-      '提示',
-      { type: 'warning' }
-    )
+    await ElMessageBox.confirm(`确定要删除报表 "${row.name}" 吗?`, '提示', { type: 'warning' })
 
     await deleteReport(row.id)
     ElMessage.success('删除成功')
     fetchReportList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -634,19 +579,15 @@ const handledelete = async (row: Report) => {
 /**
  * 批量导出
  */
-const handlebatchexport = async () => {
+const handleBatchExport = async () => {
   try {
-    await ElMessageBox.confirm(
-      `确定要导出选中的 ${selectedIds.value.length} 个报表吗?`,
-      '提示',
-      { type: 'info' }
-    )
+    await ElMessageBox.confirm(`确定要导出选中的 ${selectedIds.value.length} 个报表吗?`, '提示', {
+      type: 'info',
+    })
 
     ElMessage.success('已添加到导出队列,请稍后在下载中心查看')
     selectedIds.value = []
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('导出失败')
     }
@@ -656,21 +597,17 @@ const handlebatchexport = async () => {
 /**
  * 批量删除
  */
-const handlebatchdelete = async () => {
+const handleBatchDelete = async () => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除选中的 ${selectedIds.value.length} 个报表吗?`,
-      '提示',
-      { type: 'warning' }
-    )
+    await ElMessageBox.confirm(`确定要删除选中的 ${selectedIds.value.length} 个报表吗?`, '提示', {
+      type: 'warning',
+    })
 
     await batchDeleteReports(selectedIds.value)
     ElMessage.success('删除成功')
     selectedIds.value = []
     fetchReportList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -680,7 +617,7 @@ const handlebatchdelete = async () => {
 /**
  * 提交表单
  */
-const handlesubmit = async () => {
+const handleSubmit = async () => {
   if (!formRef.value) return
 
   try {
@@ -689,27 +626,23 @@ const handlesubmit = async () => {
     submitLoading.value = true
 
     const submitData: ReportCreateParams = {
-      name: formdata.name,;
-      type: formdata.type,;
-      dateRange: formdata.daterange!,;
-      format: formdata.format,;
-      includeData: formdata.includedata,;
-      description: formdata.description,
+      name: formData.name,
+      type: formData.type,
+      dateRange: formData.dateRange!,
+      format: formData.format,
+      includeData: formData.includeData,
+      description: formData.description,
     }
 
     await createReport(submitData)
     ElMessage.success('报表生成任务已提交,请稍后查看')
     dialogVisible.value = false
     fetchReportList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('生成失败')
     }
-  }
-
- finally {
+  } finally {
     submitLoading.value = false
   }
 }
@@ -717,7 +650,7 @@ const handlesubmit = async () => {
 /**
  * 重置表单
  */
-const resetform = () => {
+const resetForm = () => {
   formData.name = ''
   formData.type = ''
   formData.dateRange = null

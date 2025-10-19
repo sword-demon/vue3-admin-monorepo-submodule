@@ -6,15 +6,12 @@
       </slot>
     </div>
     <div class="empty-description">
-      <slot>{{ description }}
-
-</slot>
+      <slot>{{ description }}</slot>
     </div>
     <div v-if="$slots.action || showAction" class="empty-action">
       <slot name="action">
         <el-button v-if="showAction" :type="actionType" @click="handleAction">
           {{ actionText }}
-
         </el-button>
       </slot>
     </div>
@@ -22,23 +19,21 @@
 </template>
 
 <script setup lang="ts">
-import { ElButton }
+import { ElButton } from 'element-plus'
+import SvgIcon from '../SvgIcon/index.vue'
 
- from 'element-plus'
-import svgicon from '../SvgIcon/index.vue'
-
-interface props {
+interface Props {
   /** 图标名称 */
   icon?: string
-  /** 图标大小 */;
+  /** 图标大小 */
   iconSize?: string | number
-  /** 描述文本 */;
+  /** 描述文本 */
   description?: string
-  /** 是否显示操作按钮 */;
+  /** 是否显示操作按钮 */
   showAction?: boolean
-  /** 操作按钮文本 */;
+  /** 操作按钮文本 */
   actionText?: string
-  /** 操作按钮类型 */;
+  /** 操作按钮类型 */
   actionType?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
 }
 
@@ -55,12 +50,11 @@ interface Emits {
   (e: 'action'): void
 }
 
-const emit = defineemits<emits>()
+const emit = defineEmits<Emits>()
 
-const handleaction = () => {
+const handleAction = () => {
   emit('action')
 }
-
 </script>
 
 <style scoped lang="scss">

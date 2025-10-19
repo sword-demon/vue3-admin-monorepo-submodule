@@ -14,7 +14,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/system',
     component: ClassicLayout,
-    redirect: '/system/user',
+    redirect: { name: 'SystemUser' },
     meta: {
       title: '系统管理',
       icon: 'i-ep-setting',
@@ -68,7 +68,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/content',
     component: ClassicLayout,
-    redirect: '/content/article',
+    redirect: { name: 'ContentArticle' },
     meta: {
       title: '内容管理',
       icon: 'i-ep-document',
@@ -102,7 +102,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/analytics',
     component: ClassicLayout,
-    redirect: '/analytics/overview',
+    redirect: { name: 'AnalyticsOverview' },
     meta: {
       title: '数据分析',
       icon: 'i-ep-data-analysis',
@@ -136,7 +136,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
   {
     path: '/profile',
     component: ClassicLayout,
-    redirect: '/profile/index',
+    redirect: { name: 'Profile' },
     meta: {
       title: '个人中心',
       icon: 'i-ep-user',

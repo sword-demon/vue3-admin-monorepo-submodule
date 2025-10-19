@@ -48,9 +48,7 @@
       <template #header>
         <div class="card-header">
           <span class="card-title">菜单列表</span>
-          <el-button type="primary" :icon="Plus" @click="handleCreate">
-            新增菜单
-          </el-button>
+          <el-button type="primary" :icon="Plus" @click="handleCreate"> 新增菜单 </el-button>
         </div>
       </template>
 
@@ -106,7 +104,13 @@
               <el-button type="primary" text :icon="Edit" size="small" @click="handleEdit(row)">
                 编辑
               </el-button>
-              <el-button type="success" text :icon="Plus" size="small" @click="handleCreateChild(row)">
+              <el-button
+                type="success"
+                text
+                :icon="Plus"
+                size="small"
+                @click="handleCreateChild(row)"
+              >
                 新增
               </el-button>
               <el-button type="danger" text :icon="Delete" size="small" @click="handleDelete(row)">
@@ -125,12 +129,7 @@
       width="600px"
       @close="handleDialogClose"
     >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        :rules="formRules"
-        label-width="100px"
-      >
+      <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">
         <el-form-item label="上级菜单" prop="parentId">
           <el-tree-select
             v-model="formData.parentId"
@@ -151,36 +150,23 @@
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="formData.name" placeholder="请输入菜单名称" />
         </el-form-item>
-        <el-form-item
-          v-if="formData.type !== MenuType.BUTTON"
-          label="菜单图标"
-          prop="icon"
-        >
-          <el-input v-model="formData.icon" placeholder="请输入图标名称,如: ep:home-filled 或 carbon:menu">
+        <el-form-item v-if="formData.type !== MenuType.BUTTON" label="菜单图标" prop="icon">
+          <el-input
+            v-model="formData.icon"
+            placeholder="请输入图标名称,如: ep:home-filled 或 carbon:menu"
+          >
             <template #prefix>
               <SvgIcon v-if="formData.icon" :icon="formData.icon" :size="18" />
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item
-          v-if="formData.type !== MenuType.BUTTON"
-          label="路由路径"
-          prop="path"
-        >
+        <el-form-item v-if="formData.type !== MenuType.BUTTON" label="路由路径" prop="path">
           <el-input v-model="formData.path" placeholder="请输入路由路径" />
         </el-form-item>
-        <el-form-item
-          v-if="formData.type === MenuType.MENU"
-          label="组件路径"
-          prop="component"
-        >
+        <el-form-item v-if="formData.type === MenuType.MENU" label="组件路径" prop="component">
           <el-input v-model="formData.component" placeholder="请输入组件路径" />
         </el-form-item>
-        <el-form-item
-          v-if="formData.type === MenuType.DIRECTORY"
-          label="重定向"
-          prop="redirect"
-        >
+        <el-form-item v-if="formData.type === MenuType.DIRECTORY" label="重定向" prop="redirect">
           <el-input v-model="formData.redirect" placeholder="请输入重定向路径" />
         </el-form-item>
         <el-form-item label="权限标识" prop="permissions">
@@ -192,21 +178,11 @@
             placeholder="请输入权限标识,如: system:menu:list"
             style="width: 100%"
           >
-            <el-option
-              v-for="perm in commonPermissions"
-              :key="perm"
-              :label="perm"
-              :value="perm"
-            />
+            <el-option v-for="perm in commonPermissions" :key="perm" :label="perm" :value="perm" />
           </el-select>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input-number
-            v-model="formData.sort"
-            :min="0"
-            :max="9999"
-            controls-position="right"
-          />
+          <el-input-number v-model="formData.sort" :min="0" :max="9999" controls-position="right" />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="formData.status">
@@ -229,33 +205,18 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
-          确定
-        </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="handleSubmit"> 确定 </el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Search, Refresh, Plus, Edit, Delete }
-
- from '@element-plus/icons-vue'
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules }
-
- from 'element-plus'
-import * as systemapi from '@/api/system'
-import type {
-  Menu,
-  MenuListParams,
-  MenuCreateParams,
-  MenuUpdateParams,
-}
-
- from '@/types/system'
-import { MenuType, MenuStatus }
-
- from '@/types/system'
+import { Search, Refresh, Plus, Edit, Delete } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
+import * as systemApi from '@/api/system'
+import type { Menu, MenuListParams, MenuCreateParams, MenuUpdateParams } from '@/types/system'
+import { MenuType, MenuStatus } from '@/types/system'
 import { SvgIcon } from '@/components/common'
 
 // 搜索表单
@@ -294,20 +255,18 @@ const formData = reactive<MenuCreateParams | MenuUpdateParams>({
 
 // 表单验证规则
 const formRules: FormRules = {
-  name: [{;
-  type: [{; message: '请选择菜单类型',;
-  path: [
-    {;
-      required: true,;
+  name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
+  type: [{ required: true, message: '请选择菜单类型', trigger: 'change' }],
+  path: [{ required: true, message: '请输入菜单路径', trigger: 'blur' }],
   component: [
-    {;
+    {
       validator: (rule, value, callback) => {
         if (formData.type === MenuType.MENU && !value) {
           callback(new Error('请输入组件路径'))
         } else {
           callback()
         }
-      },;
+      },
       trigger: 'blur',
     },
   ],
@@ -363,9 +322,7 @@ const fetchMenuList = async () => {
   } catch (error) {
     ElMessage.error('获取菜单列表失败')
     console.error('获取菜单列表失败:', error)
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -437,9 +394,7 @@ const handleDelete = async (row: Menu) => {
     await systemApi.deleteMenu(row.id)
     ElMessage.success('删除成功')
     fetchMenuList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
       console.error('删除菜单失败:', error)
@@ -458,7 +413,10 @@ const handleStatusChange = async (row: Menu) => {
   } catch (error) {
     ElMessage.error('状态更新失败')
     // 恢复原状态
-    row.status = row.status === MenuStatus.ENABLED ? MenuStatus.DISABLED : menustatus.enabledrow.statusrow.statusMenuStatus.ENABLEDMenuStatus.DISABLED
+    row.status =
+      row.status === MenuStatus.ENABLED
+        ? MenuStatus.DISABLED
+        : menustatus.enabledrow.statusrow.statusMenuStatus.ENABLEDMenuStatus.DISABLED
   }
 }
 
@@ -474,9 +432,7 @@ const handleSubmit = async () => {
       // 编辑
       await systemApi.updateMenu(formData as MenuUpdateParams)
       ElMessage.success('更新成功')
-    }
-
- else {
+    } else {
       // 新增
       await systemApi.createMenu(formData as MenuCreateParams)
       ElMessage.success('创建成功')
@@ -484,17 +440,13 @@ const handleSubmit = async () => {
 
     dialogVisible.value = false
     fetchMenuList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== false) {
       // 不是验证失败
       ElMessage.error('操作失败')
       console.error('提交表单失败:', error)
     }
-  }
-
- finally {
+  } finally {
     submitLoading.value = false
   }
 }

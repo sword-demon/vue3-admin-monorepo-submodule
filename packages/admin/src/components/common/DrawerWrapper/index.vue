@@ -20,9 +20,7 @@
     <template v-if="showFooter" #footer>
       <slot name="footer">
         <div class="drawer-footer">
-          <el-button @click="handleCancel">{{ cancelText }}
-
-</el-button>
+          <el-button @click="handleCancel">{{ cancelText }}</el-button>
           <el-button
             type="primary"
             :loading="confirmLoading"
@@ -30,7 +28,6 @@
             @click="handleConfirm"
           >
             {{ confirmText }}
-
           </el-button>
         </div>
       </slot>
@@ -39,39 +36,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed }
+import { computed } from 'vue'
+import { ElDrawer, ElButton } from 'element-plus'
 
- from 'vue'
-import { ElDrawer, ElButton }
-
- from 'element-plus'
-
-interface props {
+interface Props {
   /** 是否显示 */
   modelValue: boolean
-  /** 标题 */;
+  /** 标题 */
   title?: string
-  /** 抽屉大小 */;
+  /** 抽屉大小 */
   size?: string | number
-  /** 抽屉方向 */;
+  /** 抽屉方向 */
   direction?: 'ltr' | 'rtl' | 'ttb' | 'btt'
-  /** 是否显示底部 */;
+  /** 是否显示底部 */
   showFooter?: boolean
-  /** 是否显示关闭按钮 */;
+  /** 是否显示关闭按钮 */
   showClose?: boolean
-  /** 点击遮罩层是否关闭 */;
+  /** 点击遮罩层是否关闭 */
   closeOnClickModal?: boolean
-  /** 按下 ESC 是否关闭 */;
+  /** 按下 ESC 是否关闭 */
   closeOnPressEscape?: boolean
-  /** 确认按钮文本 */;
+  /** 确认按钮文本 */
   confirmText?: string
-  /** 取消按钮文本 */;
+  /** 取消按钮文本 */
   cancelText?: string
-  /** 确认按钮加载状态 */;
+  /** 确认按钮加载状态 */
   confirmLoading?: boolean
-  /** 确认按钮禁用状态 */;
+  /** 确认按钮禁用状态 */
   confirmDisabled?: boolean
-  /** 内容自定义类名 */;
+  /** 内容自定义类名 */
   contentClass?: string
 }
 
@@ -90,8 +83,11 @@ const props = withDefaults(defineProps<Props>(), {
   contentClass: '',
 })
 
-interface Emits { value: boolean): void
-  (;e: 'closed'): void
+interface Emits {
+  (e: 'update:modelValue', value: boolean): void
+  (e: 'confirm'): void
+  (e: 'cancel'): void
+  (e: 'closed'): void
 }
 
 const emit = defineEmits<Emits>()
@@ -105,15 +101,14 @@ const handleConfirm = () => {
   emit('confirm')
 }
 
-const handlecancel = () => {
+const handleCancel = () => {
   visible.value = false
   emit('cancel')
 }
 
-const handleclosed = () => {
+const handleClosed = () => {
   emit('closed')
 }
-
 </script>
 
 <style scoped lang="scss">

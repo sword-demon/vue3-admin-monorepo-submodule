@@ -2,9 +2,7 @@
   <div :class="wrapperClass">
     <div v-if="title || $slots.title" class="page-header">
       <slot name="title">
-        <h2 class="page-title">{{ title }}
-
-</h2>
+        <h2 class="page-title">{{ title }}</h2>
       </slot>
       <div v-if="$slots.extra" class="page-extra">
         <slot name="extra" />
@@ -26,20 +24,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed }
+import { computed } from 'vue'
 
- from 'vue'
-
-interface props {
+interface Props {
   /** 页面标题 */
   title?: string
-  /** 是否显示内容区域卡片样式 */;
+  /** 是否显示内容区域卡片样式 */
   contentCard?: boolean
-  /** 内容区域是否全屏 */;
+  /** 内容区域是否全屏 */
   contentFullHeight?: boolean
-  /** 自定义类名 */;
+  /** 自定义类名 */
   className?: string
-  /** 内容区域自定义类名 */;
+  /** 内容区域自定义类名 */
   contentClass?: string
 }
 

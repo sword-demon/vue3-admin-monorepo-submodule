@@ -91,9 +91,7 @@
         <el-table-column prop="phone" label="手机号" width="120" />
         <el-table-column label="性别" width="80">
           <template #default="{ row }">
-            <el-tag v-if="row.gender === UserGender.MALE" type="primary" size="small">
-              男
-            </el-tag>
+            <el-tag v-if="row.gender === UserGender.MALE" type="primary" size="small"> 男 </el-tag>
             <el-tag v-else-if="row.gender === UserGender.FEMALE" type="danger" size="small">
               女
             </el-tag>
@@ -113,12 +111,7 @@
         </el-table-column>
         <el-table-column label="角色" min-width="150">
           <template #default="{ row }">
-            <el-tag
-              v-for="role in row.roles"
-              :key="role"
-              size="small"
-              class="mr-1"
-            >
+            <el-tag v-for="role in row.roles" :key="role" size="small" class="mr-1">
               {{ getRoleName(role) }}
             </el-tag>
           </template>
@@ -184,18 +177,9 @@
       width="600px"
       @close="handleDialogClose"
     >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        :rules="USER_FORM_RULES"
-        label-width="90px"
-      >
+      <el-form ref="formRef" :model="formData" :rules="USER_FORM_RULES" label-width="90px">
         <el-form-item label="用户名" prop="username">
-          <el-input
-            v-model="formData.username"
-            placeholder="请输入用户名"
-            :disabled="isEdit"
-          />
+          <el-input v-model="formData.username" placeholder="请输入用户名" :disabled="isEdit" />
         </el-form-item>
         <el-form-item v-if="!isEdit" label="密码" prop="password">
           <el-input
@@ -261,19 +245,12 @@
           <el-input v-model="formData.department" placeholder="请输入部门" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input
-            v-model="formData.remark"
-            type="textarea"
-            :rows="3"
-            placeholder="请输入备注"
-          />
+          <el-input v-model="formData.remark" type="textarea" :rows="3" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
-          确定
-        </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="handleSubmit"> 确定 </el-button>
       </template>
     </el-dialog>
 
@@ -305,16 +282,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed }
-
- from 'vue'
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules }
-
- from 'element-plus'
-import { Search, Refresh, Plus, Edit, Delete, Key }
-
- from '@element-plus/icons-vue'
-import * as systemapi from '@/api/system'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
+import { Search, Refresh, Plus, Edit, Delete, Key } from '@element-plus/icons-vue'
+import * as systemApi from '@/api/system'
 import type {
   User,
   Role,
@@ -322,9 +293,7 @@ import type {
   UserCreateParams,
   UserUpdateParams,
   UserPasswordParams,
-}
-
- from '@/types/system'
+} from '@/types/system'
 import { UserStatus, UserGender } from '@/types/system'
 
 // 搜索表单
@@ -360,20 +329,20 @@ const formRef = ref<FormInstance>()
 const passwordFormRef = ref<FormInstance>()
 
 const defaultFormData: Partial<UserCreateParams> = {
-  username: '',;
-  password: '',;
-  realName: '',;
-  email: '',;
-  phone: '',;
-  avatar: '',;
-  gender: usergender.unknown,;
-  status: userstatus.enabled,;
-  roleIds: [],;
-  department: '',;
+  username: '',
+  password: '',
+  realName: '',
+  email: '',
+  phone: '',
+  avatar: '',
+  gender: UserGender.UNKNOWN,
+  status: UserStatus.ENABLED,
+  roleIds: [],
+  department: '',
   remark: '',
 }
 
-const formdata = reactive<partial<usercreateparams & { id?: number }>>({ ...defaultFormData })
+const formData = reactive<Partial<UserCreateParams & { id?: number }>>({ ...defaultFormData })
 
 const passwordForm = reactive<UserPasswordParams>({
   id: 0,
@@ -383,13 +352,16 @@ const passwordForm = reactive<UserPasswordParams>({
 // 表单验证规则(常量 - 性能优化,避免响应式开销)
 const USER_FORM_RULES: FormRules = {
   username: [
-    {;
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 2, max: 20, message: '用户名长度在 2 到 20 个字符', trigger: 'blur' },
+  ],
   password: [
-    {; required: true,; min: 6,; max: 20,;
-  email: [
-    {; type: 'email',;
+    { required: true, min: 6, max: 20, message: '密码长度在 6 到 20 个字符', trigger: 'blur' },
+  ],
+  email: [{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }],
   phone: [
-    {; pattern: /^1[3-9]\d{9}$/,; message: '请输入正确的手机号',;
+    { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号', trigger: 'blur' },
+    {
       validator: (rule, value, callback) => {
         // 邮箱和手机号至少填一个
         if (!value && !formData.email) {
@@ -397,7 +369,7 @@ const USER_FORM_RULES: FormRules = {
         } else {
           callback()
         }
-      },;
+      },
       trigger: 'blur',
     },
   ],
@@ -405,7 +377,7 @@ const USER_FORM_RULES: FormRules = {
 
 const PASSWORD_FORM_RULES: FormRules = {
   password: [
-    {; required: true,; min: 6,; max: 20,; message: '密码长度在 6 到 20 个字符',; trigger: 'blur' },
+    { required: true, min: 6, max: 20, message: '密码长度在 6 到 20 个字符', trigger: 'blur' },
   ],
 }
 
@@ -431,18 +403,16 @@ const fetchUserList = async () => {
   loading.value = true
   try {
     const params: UserListParams = {
-      page: pagination.page,;
-      pageSize: pagination.pagesize,
-      ...searchform,
+      page: pagination.page,
+      pageSize: pagination.pageSize,
+      ...searchForm,
     }
     const result = await systemApi.getUserList(params)
     userList.value = result.list
     pagination.total = result.total
   } catch (error) {
     ElMessage.error('获取用户列表失败')
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -479,7 +449,7 @@ const handleSizeChange = () => {
   fetchUserList()
 }
 
-const handlepagechange = () => {
+const handlePageChange = () => {
   fetchUserList()
 }
 
@@ -498,7 +468,7 @@ const handleSelectionChange = (selection: User[]) => {
  *
  * 遵循防御性编程 - 失败时回滚UI状态,避免UI与后端数据不一致
  */
-const handlestatuschange = async (row: User) => {
+const handleStatusChange = async (row: User) => {
   try {
     await systemApi.updateUser({
       id: row.id,
@@ -508,7 +478,7 @@ const handlestatuschange = async (row: User) => {
   } catch (error) {
     ElMessage.error('状态更新失败')
     // 恢复原状态 - API调用失败时回滚UI,避免前后端状态不一致
-    row.status = row.status === UserStatus.ENABLED ? UserStatus.DISABLED : userstatus.enabledAPI调用失败时回滚UI,避免前后端状态不一致row.statusrow.statusUserStatus.ENABLEDUserStatus.DISABLED
+    row.status = row.status === UserStatus.ENABLED ? UserStatus.DISABLED : UserStatus.ENABLED
   }
 }
 
@@ -532,9 +502,9 @@ const handleCreate = () => {
  * - 编辑时需要完整数据,因此单独调用详情接口
  * - 遵循数据最小化原则 - 按需加载数据
  */
-const handleedit = async (row: User) => {
-  isedit.value = true
-  dialogvisible.value = true
+const handleEdit = async (row: User) => {
+  isEdit.value = true
+  dialogVisible.value = true
   try {
     const user = await systemApi.getUser(row.id)
     Object.assign(formData, {
@@ -564,9 +534,7 @@ const handleDelete = async (row: User) => {
     await systemApi.deleteUser(row.id)
     ElMessage.success('删除成功')
     fetchUserList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -583,9 +551,7 @@ const handleBatchDelete = async () => {
     ElMessage.success('删除成功')
     selectedIds.value = []
     fetchUserList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -596,7 +562,7 @@ const handleBatchDelete = async () => {
  * 上传前验证
  * 检查文件格式和大小
  */
-const handlebeforeupload = (file: File) => {
+const handleBeforeUpload = (file: File) => {
   const isImage = ['image/jpeg', 'image/png', 'image/gif'].includes(file.type)
   const isLt2M = file.size / 1024 / 1024 < 2
 
@@ -615,9 +581,9 @@ const handlebeforeupload = (file: File) => {
  * 自定义上传逻辑
  * 将图片转换为 base64 存储(实际项目中应上传到服务器)
  */
-const handleupload = (options: any) => {
+const handleUpload = (options: any) => {
   const file = options.file
-  const reader = new filereader()
+  const reader = new FileReader()
 
   reader.onload = (e) => {
     formData.avatar = e.target?.result as string
@@ -660,7 +626,7 @@ const handleDialogClose = () => {
  *
  * 遵循KISS原则 - 使用标准的validate模式,逻辑清晰易维护
  */
-const handlesubmit = async () => {
+const handleSubmit = async () => {
   if (!formRef.value) return
 
   await formRef.value.validate(async (valid) => {

@@ -1,28 +1,29 @@
 <template>
-  <Icon v-if="isIconify" :icon="props.icon" :style="iconStyle" :class="['svg-icon', 'iconify', props.className]" />
+  <Icon
+    v-if="isIconify"
+    :icon="props.icon"
+    :style="iconStyle"
+    :class="['svg-icon', 'iconify', props.className]"
+  />
   <svg v-else :class="svgClass" :style="iconStyle" aria-hidden="true">
     <use :xlink:href="iconName" />
   </svg>
 </template>
 
 <script setup lang="ts">
-import { computed }
+import { computed } from 'vue'
+import { Icon } from '@iconify/vue'
 
- from 'vue'
-import { Icon }
-
- from '@iconify/vue'
-
-interface props {
+interface Props {
   /** 图标名称 */
   icon: string
-  /** 图标大小 */;
+  /** 图标大小 */
   size?: string | number
-  /** 图标颜色 */;
+  /** 图标颜色 */
   color?: string
-  /** 是否使用 Iconify */;
+  /** 是否使用 Iconify */
   iconify?: boolean
-  /** 自定义类名 */;
+  /** 自定义类名 */
   className?: string
 }
 

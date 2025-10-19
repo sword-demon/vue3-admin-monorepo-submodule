@@ -19,6 +19,13 @@ export const constantRoutes: RouteRecordRaw[] = [
     },
   },
   {
+    path: '/home',
+    redirect: '/',
+    meta: {
+      hidden: true,
+    },
+  },
+  {
     path: '/redirect',
     component: ClassicLayout,
     meta: {
@@ -36,15 +43,15 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
   {
     path: '/',
+    name: 'Layout',
     component: ClassicLayout,
-    redirect: '/home',
     meta: {
       title: '工作台',
       icon: 'i-ep-menu',
     },
     children: [
       {
-        path: 'home',
+        path: '',
         name: 'Home',
         component: () => import('@/views/home/index.vue'),
         meta: {
@@ -58,7 +65,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_APP_BASE_URL),
+  history: createWebHistory('/'),
   routes: constantRoutes,
 })
 

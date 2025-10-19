@@ -31,21 +31,33 @@
             </div>
           </template>
 
-          <el-form ref="formRef" :model="form" :rules="rules" label-width="120px" class="settings-form">
+          <el-form
+            ref="formRef"
+            :model="form"
+            :rules="rules"
+            label-width="120px"
+            class="settings-form"
+          >
             <el-form-item label="站点标题" prop="siteTitle">
-              <el-input v-model="form.siteTitle" placeholder="请输入网站标题" maxlength="60" show-word-limit />
+              <el-input
+                v-model="form.siteTitle"
+                placeholder="请输入网站标题"
+                maxlength="60"
+                show-word-limit
+              />
             </el-form-item>
 
             <el-form-item label="副标题">
-              <el-input v-model="form.siteSubtitle" placeholder="可选：副标题或标语" maxlength="120" show-word-limit />
+              <el-input
+                v-model="form.siteSubtitle"
+                placeholder="可选：副标题或标语"
+                maxlength="120"
+                show-word-limit
+              />
             </el-form-item>
 
             <el-form-item label="Logo 地址" prop="siteLogo">
-              <el-input
-                v-model="form.siteLogo"
-                placeholder="请输入 Logo 图片地址"
-                clearable
-              >
+              <el-input v-model="form.siteLogo" placeholder="请输入 Logo 图片地址" clearable>
                 <template #append>
                   <el-button text type="primary" @click="openLink(form.siteLogo)">预览</el-button>
                 </template>
@@ -56,13 +68,11 @@
             </el-form-item>
 
             <el-form-item label="Favicon 地址" prop="siteFavicon">
-              <el-input
-                v-model="form.siteFavicon"
-                placeholder="请输入 Favicon 图标地址"
-                clearable
-              >
+              <el-input v-model="form.siteFavicon" placeholder="请输入 Favicon 图标地址" clearable>
                 <template #append>
-                  <el-button text type="primary" @click="openLink(form.siteFavicon)">预览</el-button>
+                  <el-button text type="primary" @click="openLink(form.siteFavicon)"
+                    >预览</el-button
+                  >
                 </template>
               </el-input>
               <div v-if="form.siteFavicon" class="media-preview favicon">
@@ -109,11 +119,19 @@
             <el-divider>版权 & 备案</el-divider>
 
             <el-form-item label="版权信息">
-              <el-input v-model="form.copyright" placeholder="例如：© 2025 公司名称" maxlength="120" />
+              <el-input
+                v-model="form.copyright"
+                placeholder="例如：© 2025 公司名称"
+                maxlength="120"
+              />
             </el-form-item>
 
             <el-form-item label="备案号">
-              <el-input v-model="form.icpNumber" placeholder="例如：粤ICP备12345678号" maxlength="60" />
+              <el-input
+                v-model="form.icpNumber"
+                placeholder="例如：粤ICP备12345678号"
+                maxlength="60"
+              />
             </el-form-item>
 
             <el-divider>统计脚本</el-divider>
@@ -143,40 +161,30 @@
               <img v-if="form.siteLogo" :src="form.siteLogo" alt="Logo" />
               <div v-else class="logo-placeholder">LOGO</div>
             </div>
-            <h3>{{ form.siteTitle || '站点标题' }}
+            <h3>{{ form.siteTitle || '站点标题' }}</h3>
+            <p v-if="form.siteSubtitle" class="subtitle">{{ form.siteSubtitle }}</p>
 
-</h3>
-            <p v-if="form.siteSubtitle" class="subtitle">{{ form.siteSubtitle }}
-
-</p>
-
-            <el-divider>
-              <i class="i-ep-magic-stick" /> SEO
-            </el-divider>
+            <el-divider> <i class="i-ep-magic-stick" /> SEO </el-divider>
             <div class="preview-section">
               <h4>关键词</h4>
-              <el-tag v-for="keyword in form.seoKeywords" :key="keyword" class="keyword-tag" size="small">
+              <el-tag
+                v-for="keyword in form.seoKeywords"
+                :key="keyword"
+                class="keyword-tag"
+                size="small"
+              >
                 {{ keyword }}
-
               </el-tag>
             </div>
             <div class="preview-section">
               <h4>摘要</h4>
-              <p class="description">{{ form.seoDescription || '暂无描述' }}
-
-</p>
+              <p class="description">{{ form.seoDescription || '暂无描述' }}</p>
             </div>
 
-            <el-divider>
-              <i class="i-ep-document"></i> Footer
-            </el-divider>
+            <el-divider> <i class="i-ep-document"></i> Footer </el-divider>
             <div class="preview-section">
-              <p>{{ form.copyright || '© 2025 公司名称' }}
-
-</p>
-              <p v-if="form.icpNumber">备案号：{{ form.icpNumber }}
-
-</p>
+              <p>{{ form.copyright || '© 2025 公司名称' }}</p>
+              <p v-if="form.icpNumber">备案号：{{ form.icpNumber }}</p>
             </div>
           </div>
         </el-card>
@@ -186,18 +194,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch, computed, onMounted }
-
- from 'vue'
-import type { FormInstance, FormRules }
-
- from 'element-plus'
-import { ElMessage }
-
- from 'element-plus'
-import { useSettingsStore }
-
- from '@/stores'
+import { reactive, ref, watch, computed, onMounted } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import { useSettingsStore } from '@/stores'
 import type { SystemSettings } from '@/types/system'
 
 const settingsStore = useSettingsStore()
@@ -217,46 +217,46 @@ const form = reactive({
 })
 
 const rules: FormRules = {
-  siteTitle: [{;
-  siteLogo: [{;
-  siteFavicon: [{; type: 'url',;
+  siteTitle: [{ required: true, message: '请输入网站标题', trigger: 'blur' }],
+  siteLogo: [{ required: true, message: '请上传网站Logo', trigger: 'change' }],
+  siteFavicon: [
+    { required: true, type: 'url', message: '请输入有效的网站图标URL', trigger: 'blur' },
+  ],
   seoDescription: [
-    {; required: true,; min: 10,; message: '描述长度不少于 10 个字符',; trigger: 'blur' },
+    { required: true, min: 10, message: '描述长度不少于 10 个字符', trigger: 'blur' },
   ],
 }
 
-const loading = computed(() => settingsstore.loading)
-const saving = computed(() => settingsstore.saving)
+const loading = computed(() => settingsStore.loading)
+const saving = computed(() => settingsStore.saving)
 
-const handlerefresh = async () => {
+const handleRefresh = async () => {
   await settingsStore.fetchSettings({ force: true })
 }
 
-const openlink = (url?: string) => {
+const openLink = (url?: string) => {
   if (!url) return
   window.open(url, '_blank')
 }
 
-const handlesubmit = async () => {
+const handleSubmit = async () => {
   if (!formRef.value) return
   try {
     await formRef.value.validate()
-  }
-
- catch {
+  } catch {
     ElMessage.warning('请完善必填项后再保存')
     return
   }
 
   const payload = {
     ...form,
-    seoKeywords: normalizekeywords(form.seokeywords),seoKeywords
+    seoKeywords: normalizeKeywords(form.seoKeywords),
   }
 
   await settingsStore.saveSettings(payload)
 }
 
-const syncform = (settings: SystemSettings | null) => {
+const syncForm = (settings: SystemSettings | null) => {
   if (!settings) return
   form.siteTitle = settings.siteTitle || ''
   form.siteSubtitle = settings.siteSubtitle || ''
@@ -292,7 +292,6 @@ function normalizeKeywords(keywords: string[]): string[] {
   })
   return Array.from(unique)
 }
-
 </script>
 
 <style scoped lang="scss">

@@ -3,9 +3,7 @@
   <el-sub-menu v-if="hasChildren" :index="resolvePath(item.path)">
     <template #title>
       <menu-icon :icon="item.meta?.icon" />
-      <span>{{ item.meta?.title }}
-
-</span>
+      <span>{{ item.meta?.title }}</span>
     </template>
     <menu-item
       v-for="child in visibleChildren"
@@ -19,17 +17,13 @@
   <el-menu-item v-else :index="resolvePath(item.path)">
     <menu-icon :icon="item.meta?.icon" />
     <template #title>
-      <span>{{ item.meta?.title }}
-
-</span>
+      <span>{{ item.meta?.title }}</span>
     </template>
   </el-menu-item>
 </template>
 
 <script setup lang="ts">
-import { computed }
-
- from 'vue'
+import { computed } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import MenuIcon from './MenuIcon.vue'
 
@@ -40,8 +34,8 @@ defineOptions({
 
 interface Props {
   /** 路由项 */
-  item: routerecordraw
-  /** 基础路径 */;
+  item: RouteRecordRaw
+  /** 基础路径 */
   basePath?: string
 }
 
@@ -69,8 +63,6 @@ const resolvePath = (path: string): string => {
     return path
   }
 
-  return `${props.basePath}
-
-/${path}`.replace(/\/+/g, '/')
+  return `${props.basePath}/${path}`.replace(/\/+/g, '/')
 }
 </script>

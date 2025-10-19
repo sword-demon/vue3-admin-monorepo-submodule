@@ -31,11 +31,7 @@
 
       <!-- 操作按钮 -->
       <div class="mb-4">
-        <el-button
-          v-permission="'content:category:create'"
-          type="primary"
-          @click="handleCreate"
-        >
+        <el-button v-permission="'content:category:create'" type="primary" @click="handleCreate">
           <template #icon>
             <Icon icon="ep:plus" />
           </template>
@@ -97,23 +93,13 @@
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="createdAt"
-          label="创建时间"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="createdAt" label="创建时间" width="180" align="center">
           <template #default="{ row }">
             {{ row.createdAt }}
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="updatedAt"
-          label="更新时间"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="updatedAt" label="更新时间" width="180" align="center">
           <template #default="{ row }">
             {{ row.updatedAt }}
           </template>
@@ -164,12 +150,7 @@
       width="600px"
       :close-on-click-modal="false"
     >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        :rules="formRules"
-        label-width="100px"
-      >
+      <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">
         <el-form-item label="分类名称" prop="name">
           <el-input
             v-model="formData.name"
@@ -185,9 +166,7 @@
             placeholder="请输入URL友好的标识(如: tech)"
             maxlength="50"
           />
-          <div class="text-xs text-gray-500 mt-1">
-            用于生成分类URL,只能包含字母、数字、连字符
-          </div>
+          <div class="text-xs text-gray-500 mt-1">用于生成分类URL,只能包含字母、数字、连字符</div>
         </el-form-item>
 
         <el-form-item label="描述" prop="description">
@@ -209,33 +188,23 @@
             placeholder="请输入排序值"
             style="width: 100%"
           />
-          <div class="text-xs text-gray-500 mt-1">
-            数值越小排序越靠前
-          </div>
+          <div class="text-xs text-gray-500 mt-1">数值越小排序越靠前</div>
         </el-form-item>
       </el-form>
 
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
-          确定
-        </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="handleSubmit"> 确定 </el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed }
-
- from 'vue'
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules }
-
- from 'element-plus'
-import { Icon }
-
- from '@iconify/vue'
-import * as contentapi from '@/api/content'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
+import { Icon } from '@iconify/vue'
+import * as contentApi from '@/api/content'
 import type {
   Category,
   CategoryListParams,
@@ -282,27 +251,36 @@ const dialogTitle = computed(() => (isEdit.value ? '编辑分类' : '新增分�
 // 表单验证规则
 const formRules: FormRules = {
   name: [
-    {;
+    { required: true, message: '请输入分类名称', trigger: 'blur' },
+    { min: 1, max: 50, message: '分类名称长度在 1 到 50 个字符', trigger: 'blur' },
+  ],
   slug: [
-    {;
-      pattern: /^[a-z0-9-]+$/,;
-  description: [
-    {;
+    { required: true, message: '请输入分类标识', trigger: 'blur' },
+    { pattern: /^[a-z0-9-]+$/, message: '只能包含小写字母、数字和连字符', trigger: 'blur' },
+  ],
+  description: [{ max: 200, message: '描述不能超过 200 个字符', trigger: 'blur' }],
   sort: [
-    {; required: true,; type: 'number',; min: 0,; max: 999,; message: '排序值必须在 0 到 999 之间',; trigger: 'blur' },
+    {
+      required: true,
+      type: 'number',
+      min: 0,
+      max: 999,
+      message: '排序值必须在 0 到 999 之间',
+      trigger: 'blur',
+    },
   ],
 }
 
 /**
  * 获取分类列表
  */
-const fetchcategorylist = async () => {
+const fetchCategoryList = async () => {
   loading.value = true
   try {
     const params: CategoryListParams = {
-      page: pagination.page,;
-      pageSize: pagination.pagesize,;
-      name: searchform.name,
+      page: pagination.page,
+      pageSize: pagination.pageSize,
+      name: searchForm.name,
     }
 
     const result = await contentApi.getCategoryList(params)
@@ -310,9 +288,7 @@ const fetchcategorylist = async () => {
     pagination.total = result.total
   } catch (error) {
     ElMessage.error('获取分类列表失败')
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -320,7 +296,7 @@ const fetchcategorylist = async () => {
 /**
  * 搜索
  */
-const handlesearch = () => {
+const handleSearch = () => {
   pagination.page = 1
   fetchCategoryList()
 }
@@ -328,7 +304,7 @@ const handlesearch = () => {
 /**
  * 重置搜索
  */
-const handlereset = () => {
+const handleReset = () => {
   searchForm.name = ''
   handleSearch()
 }
@@ -336,14 +312,14 @@ const handlereset = () => {
 /**
  * 选择变化
  */
-const handleselectionchange = (selection: Category[]) => {
+const handleSelectionChange = (selection: Category[]) => {
   selectedIds.value = selection.map((item) => item.id)
 }
 
 /**
  * 新增
  */
-const handlecreate = () => {
+const handleCreate = () => {
   isEdit.value = false
   dialogVisible.value = true
   resetForm()
@@ -352,9 +328,9 @@ const handlecreate = () => {
 /**
  * 编辑
  */
-const handleedit = async (row: Category) => {
-  isedit.value = true
-  dialogvisible.value = true
+const handleEdit = async (row: Category) => {
+  isEdit.value = true
+  dialogVisible.value = true
 
   try {
     const category = await contentApi.getCategory(row.id)
@@ -373,22 +349,16 @@ const handleedit = async (row: Category) => {
 /**
  * 删除
  */
-const handledelete = async (row: Category) => {
+const handleDelete = async (row: Category) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除分类 "${row.name}" 吗?`,
-      '提示',
-      {
-        type: 'warning',
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除分类 "${row.name}" 吗?`, '提示', {
+      type: 'warning',
+    })
 
     await contentApi.deleteCategory(row.id)
     ElMessage.success('删除成功')
     fetchCategoryList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -398,26 +368,20 @@ const handledelete = async (row: Category) => {
 /**
  * 批量删除
  */
-const handlebatchdelete = async () => {
+const handleBatchDelete = async () => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除选中的 ${selectedIds.value.length} 个分类吗?`,
-      '提示',
-      {
-        type: 'warning',
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除选中的 ${selectedIds.value.length} 个分类吗?`, '提示', {
+      type: 'warning',
+    })
 
     // 模拟批量删除（实际项目中应该实现批量删除API）
-    const deletePromises = selectedIds.value.map(id => contentApi.deleteCategory(id))
+    const deletePromises = selectedIds.value.map((id) => contentApi.deleteCategory(id))
     await Promise.all(deletePromises)
 
     ElMessage.success('删除成功')
     selectedIds.value = []
     fetchCategoryList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -427,7 +391,7 @@ const handlebatchdelete = async () => {
 /**
  * 排序变更
  */
-const handlesortchange = async (row: Category) => {
+const handleSortChange = async (row: Category) => {
   try {
     await contentApi.updateCategory({
       id: row.id,
@@ -446,7 +410,7 @@ const handlesortchange = async (row: Category) => {
 /**
  * 提交表单
  */
-const handlesubmit = async () => {
+const handleSubmit = async () => {
   if (!formRef.value) return
 
   try {
@@ -464,9 +428,7 @@ const handlesubmit = async () => {
         sort: formData.sort,
       } as CategoryUpdateParams)
       ElMessage.success('更新成功')
-    }
-
- else {
+    } else {
       // 创建
       await contentApi.createCategory(formData as CategoryCreateParams)
       ElMessage.success('创建成功')
@@ -474,15 +436,11 @@ const handlesubmit = async () => {
 
     dialogVisible.value = false
     fetchCategoryList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error(isEdit.value ? '更新失败' : '创建失败')
     }
-  }
-
- finally {
+  } finally {
     submitLoading.value = false
   }
 }
@@ -490,7 +448,7 @@ const handlesubmit = async () => {
 /**
  * 重置表单
  */
-const resetform = () => {
+const resetForm = () => {
   formData.id = undefined
   formData.name = ''
   formData.slug = ''

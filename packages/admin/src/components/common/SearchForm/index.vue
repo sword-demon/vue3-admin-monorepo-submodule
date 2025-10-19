@@ -27,19 +27,15 @@
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="handleSearch">
             {{ searchText }}
-
           </el-button>
-          <el-button :icon="Refresh" @click="handleReset">{{ resetText }}
-
-</el-button>
+          <el-button :icon="Refresh" @click="handleReset">{{ resetText }}</el-button>
           <el-button
             v-if="collapsible && items.length > collapseCount"
             type="text"
             :icon="collapsed ? ArrowDown : ArrowUp"
             @click="toggleCollapse"
           >
-            {{ collapsed ? expandText : collapsetextexpandText }}
-
+            {{ collapsed ? expandText : collapseText }}
           </el-button>
         </el-form-item>
       </el-col>
@@ -48,9 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, reactive, watch, type Component }
-
- from 'vue'
+import { ref, computed, reactive, watch, type Component } from 'vue'
 import {
   ElForm,
   ElFormItem,
@@ -60,54 +54,50 @@ import {
   ElInput,
   ElSelect,
   type FormInstance,
-}
+} from 'element-plus'
+import { Search, Refresh, ArrowDown, ArrowUp } from '@element-plus/icons-vue'
 
- from 'element-plus'
-import { Search, Refresh, ArrowDown, ArrowUp }
-
- from '@element-plus/icons-vue'
-
-export interface searchformitem {
+export interface SearchFormItem {
   /** 字段名 */
   prop: string
-  /** 标签 */;
+  /** 标签 */
   label: string
-  /** 组件类型 */;
+  /** 组件类型 */
   type: 'input' | 'select' | 'date' | 'daterange'
-  /** 占据列数 */;
+  /** 占据列数 */
   span?: number
-  /** 占位符 */;
+  /** 占位符 */
   placeholder?: string
-  /** 组件属性 */;
-  props?: record<string, unknown>
+  /** 组件属性 */
+  props?: Record<string, unknown>
 }
 
-interface props {
+interface Props {
   /** 表单数据 */
-  modelValue: record<string, unknown>
-  /** 表单项配置 */;
-  items: searchformitem[]
-  /** 是否行内表单 */;
+  modelValue: Record<string, unknown>
+  /** 表单项配置 */
+  items: SearchFormItem[]
+  /** 是否行内表单 */
   inline?: boolean
-  /** 标签宽度 */;
+  /** 标签宽度 */
   labelWidth?: string
-  /** 栅格间隔 */;
+  /** 栅格间隔 */
   gutter?: number
-  /** 默认每项占据列数 */;
+  /** 默认每项占据列数 */
   defaultSpan?: number
-  /** 操作按钮占据列数 */;
+  /** 操作按钮占据列数 */
   actionSpan?: number
-  /** 是否可折叠 */;
+  /** 是否可折叠 */
   collapsible?: boolean
-  /** 折叠时显示项数 */;
+  /** 折叠时显示项数 */
   collapseCount?: number
-  /** 搜索按钮文本 */;
+  /** 搜索按钮文本 */
   searchText?: string
-  /** 重置按钮文本 */;
+  /** 重置按钮文本 */
   resetText?: string
-  /** 展开按钮文本 */;
+  /** 展开按钮文本 */
   expandText?: string
-  /** 收起按钮文本 */;
+  /** 收起按钮文本 */
   collapseText?: string
 }
 
@@ -125,8 +115,11 @@ const props = withDefaults(defineProps<Props>(), {
   collapseText: '收起',
 })
 
-interface Emits { value: record<string, unknown>): void
-  (;e: 'change',; value: record<string, unknown>): void
+interface Emits {
+  (e: 'update:modelValue', value: Record<string, unknown>): void
+  (e: 'search', value: Record<string, unknown>): void
+  (e: 'reset', value: Record<string, unknown>): void
+  (e: 'change', value: Record<string, unknown>): void
 }
 
 const emit = defineEmits<Emits>()
@@ -153,8 +146,8 @@ watch(
 
 // 组件类型映射(性能优化 - 避免在渲染时查找)
 const componentMap: Record<string, Component> = {
-  input: elinput,;
-  select: elselect,
+  input: ElInput,
+  select: ElSelect,
   // 其他类型可以继续扩展
 }
 
@@ -171,7 +164,8 @@ const enrichedVisibleItems = computed(() => {
   return visibleItems.value.map((item) => ({
     ...item,
     component: componentMap[item.type] || ElInput,
-    placeholder: item.placeholder || (item.type === 'select' ? `请选择${item.label}` : `请输入${item.label}`),
+    placeholder:
+      item.placeholder || (item.type === 'select' ? `请选择${item.label}` : `请输入${item.label}`),
   }))
 })
 
@@ -195,7 +189,6 @@ const handleReset = () => {
 const handleChange = () => {
   emit('change', { ...localModel })
 }
-
 </script>
 
 <style scoped lang="scss">

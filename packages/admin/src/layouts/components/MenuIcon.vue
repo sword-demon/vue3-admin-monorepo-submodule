@@ -5,12 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed }
+import { computed } from 'vue'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
- from 'vue'
-import * as elementplusiconsvue from '@element-plus/icons-vue'
-
-interface props {
+interface Props {
   /** 图标名称 */
   icon?: string
 }

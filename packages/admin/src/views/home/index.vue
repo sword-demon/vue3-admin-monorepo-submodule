@@ -11,22 +11,17 @@
     </el-space>
 
     <div class="mt-8">
-      <el-button type="primary" size="large" @click="handleStart">
-        开始使用
-      </el-button>
+      <el-button type="primary" size="large" @click="handleStart"> 开始使用 </el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ElMessage }
+import { ElMessage } from 'element-plus'
 
- from 'element-plus'
-
-const handlestart = () => {
+const handleStart = () => {
   ElMessage.success('欢迎使用 Vue3 后台管理系统!')
 }
-
 </script>
 
 <style lang="scss" scoped>

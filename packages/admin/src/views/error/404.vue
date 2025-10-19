@@ -13,20 +13,17 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter }
+import { useRouter } from 'vue-router'
 
- from 'vue-router'
+const router = useRouter()
 
-const router = userouter()
-
-const gohome = () => {
+const goHome = () => {
   router.push('/')
 }
 
-const goback = () => {
+const goBack = () => {
   router.back()
 }
-
 </script>
 
 <style scoped lang="scss">

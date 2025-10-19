@@ -21,15 +21,8 @@
           alt="站点 Logo"
           class="logo-image"
         />
-        <SvgIcon
-          v-else
-          icon="carbon:application"
-          :size="28"
-          color="var(--el-color-primary)"
-        />
-        <span class="logo-text">{{ settingsStore.siteTitle }}
-
-</span>
+        <SvgIcon v-else icon="carbon:application" :size="28" color="var(--el-color-primary)" />
+        <span class="logo-text">{{ settingsStore.siteTitle }} </span>
       </div>
 
       <!-- 面包屑 -->
@@ -52,7 +45,10 @@
 
       <!-- 主题切换 -->
       <div class="header-action" @click="themeStore.toggleDark()">
-        <el-tooltip :content="themeStore.isDark() ? '切换到亮色模式' : '切换到暗色模式'" placement="bottom">
+        <el-tooltip
+          :content="themeStore.isDark() ? '切换到亮色模式' : '切换到暗色模式'"
+          placement="bottom"
+        >
           <el-icon :size="18">
             <Sunny v-if="themeStore.isDark()" />
             <Moon v-else />
@@ -84,9 +80,9 @@
           <el-avatar :size="32" :src="userStore.userInfo?.avatar">
             <el-icon><User /></el-icon>
           </el-avatar>
-          <span class="user-name">{{ userStore.userInfo?.nickname || userStore.userInfo?.username }}
-
-</span>
+          <span class="user-name"
+            >{{ userStore.userInfo?.nickname || userStore.userInfo?.username }}
+          </span>
           <el-icon class="user-arrow"><ArrowDown /></el-icon>
         </div>
         <template #dropdown>
@@ -111,15 +107,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted }
-
- from 'vue'
-import { useRouter, useRoute }
-
- from 'vue-router'
-import { ElMessageBox, ElMessage }
-
- from 'element-plus'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import {
   Fold,
   Expand,
@@ -132,12 +122,8 @@ import {
   ArrowDown,
   Setting,
   SwitchButton,
-}
-
- from '@element-plus/icons-vue'
-import { SvgIcon }
-
- from '@/components/common'
+} from '@element-plus/icons-vue'
+import { SvgIcon } from '@/components/common'
 import { useLayoutStore, useUserStore, useThemeStore, useSettingsStore } from '@/stores'
 
 const router = useRouter()
@@ -165,9 +151,7 @@ const breadcrumbs = computed(() => {
 const toggleFullscreen = () => {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen()
-  }
-
- else {
+  } else {
     document.exitFullscreen()
   }
 }
@@ -176,7 +160,7 @@ const toggleFullscreen = () => {
  * 监听全屏状态变化
  * 确保全屏切换后页面布局正确响应
  */
-const handlefullscreenchange = () => {
+const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement
 
   // 延迟触发 resize 事件，确保布局正确更新
@@ -235,10 +219,9 @@ const handleUserCommand = async (command: string) => {
 
       break
     default:
-      console.warn('[Header] Unknown command:', command)default
+      console.warn('[Header] Unknown command:', command)
   }
 }
-
 </script>
 
 <style scoped lang="scss">

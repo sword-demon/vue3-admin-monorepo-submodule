@@ -11,19 +11,19 @@
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card shadow="hover" class="stat-card">
           <div class="stat-content">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">
+            <div
+              class="stat-icon"
+              style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            >
               <i class="i-ep-document text-3xl" />
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ statistics.totalArticles }}
-
-</div>
+              <div class="stat-value">{{ statistics.totalArticles }}</div>
               <div class="stat-label">文章总数</div>
               <div class="stat-trend">
                 <span class="trend-up">
                   <i class="i-ep-caret-top" />
                   +{{ statistics.todayArticles }}
-
                 </span>
                 <span class="text-xs text-gray-500">今日新增</span>
               </div>
@@ -35,19 +35,19 @@
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card shadow="hover" class="stat-card">
           <div class="stat-content">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">
+            <div
+              class="stat-icon"
+              style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+            >
               <i class="i-ep-user text-3xl" />
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ statistics.totalUsers }}
-
-</div>
+              <div class="stat-value">{{ statistics.totalUsers }}</div>
               <div class="stat-label">用户总数</div>
               <div class="stat-trend">
                 <span class="trend-up">
                   <i class="i-ep-caret-top" />
                   +{{ statistics.todayUsers }}
-
                 </span>
                 <span class="text-xs text-gray-500">今日新增</span>
               </div>
@@ -59,19 +59,19 @@
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card shadow="hover" class="stat-card">
           <div class="stat-content">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">
+            <div
+              class="stat-icon"
+              style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+            >
               <i class="i-ep-view text-3xl" />
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ formatNumber(statistics.totalViews) }}
-
-</div>
+              <div class="stat-value">{{ formatNumber(statistics.totalViews) }}</div>
               <div class="stat-label">总浏览量</div>
               <div class="stat-trend">
                 <span class="trend-up">
                   <i class="i-ep-caret-top" />
                   +{{ formatNumber(statistics.todayViews) }}
-
                 </span>
                 <span class="text-xs text-gray-500">今日浏览</span>
               </div>
@@ -83,19 +83,19 @@
       <el-col :xs="24" :sm="12" :lg="6">
         <el-card shadow="hover" class="stat-card">
           <div class="stat-content">
-            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)">
+            <div
+              class="stat-icon"
+              style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
+            >
               <i class="i-ep-chat-dot-round text-3xl" />
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ statistics.totalComments }}
-
-</div>
+              <div class="stat-value">{{ statistics.totalComments }}</div>
               <div class="stat-label">评论总数</div>
               <div class="stat-trend">
                 <span class="trend-up">
                   <i class="i-ep-caret-top" />
                   +{{ statistics.todayComments }}
-
                 </span>
                 <span class="text-xs text-gray-500">今日评论</span>
               </div>
@@ -131,19 +131,21 @@
                 <div class="chart-summary">
                   <div class="summary-item">
                     <span class="summary-label">总浏览量</span>
-                    <span class="summary-value">{{ formatNumber(trendData.reduce((sum, item) => sum + item.views, 0)) }}
-
-</span>
+                    <span class="summary-value"
+                      >{{ formatNumber(trendData.reduce((sum, item) => sum + item.views, 0)) }}
+                    </span>
                   </div>
                   <div class="summary-item">
                     <span class="summary-label">活跃用户</span>
-                    <span class="summary-value">{{ trendData.reduce((sum, item) => sum + item.users, 0) }}
-
-</span>
+                    <span class="summary-value"
+                      >{{ trendData.reduce((sum, item) => sum + item.users, 0) }}
+                    </span>
                   </div>
                   <div class="summary-item">
                     <span class="summary-label">新增文章</span>
-                    <span class="summary-value">{{ trendData.reduce((sum, item) => sum + item.articles, 0) }}</span>
+                    <span class="summary-value">{{
+                      trendData.reduce((sum, item) => sum + item.articles, 0)
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -153,20 +155,16 @@
                     v-for="item in trendData"
                     :key="item.date"
                     class="chart-bar"
-                    :style="{ height: `${(item.views / Math.max(...trendData.map(d => d.views))) * 200}px` }"
+                    :style="{
+                      height: `${(item.views / Math.max(...trendData.map((d) => d.views))) * 200}px`,
+                    }"
                     :title="`${item.date}: ${formatNumber(item.views)} 浏览量`"
                   >
-                    <div class="bar-value">{{ formatNumber(item.views) }}
-
-</div>
+                    <div class="bar-value">{{ formatNumber(item.views) }}</div>
                   </div>
                 </div>
                 <div class="chart-labels">
-                  <span
-                    v-for="item in trendData"
-                    :key="item.date"
-                    class="chart-label"
-                  >
+                  <span v-for="item in trendData" :key="item.date" class="chart-label">
                     {{ item.date.slice(5) }}
                   </span>
                 </div>
@@ -195,15 +193,17 @@
                   class="status-bar"
                   :style="{
                     width: `${(statistics.publishedArticles / statistics.totalArticles) * 100}%`,
-                    background: '#67c23a'
+                    background: '#67c23a',
                   }"
                 />
                 <div class="status-info">
                   <span class="status-label">已发布</span>
-                  <span class="status-value">{{ statistics.publishedArticles }}
-
-</span>
-                  <span class="status-percent">{{ Math.round((statistics.publishedArticles / statistics.totalArticles) * 100) }}%</span>
+                  <span class="status-value">{{ statistics.publishedArticles }} </span>
+                  <span class="status-percent"
+                    >{{
+                      Math.round((statistics.publishedArticles / statistics.totalArticles) * 100)
+                    }}%</span
+                  >
                 </div>
               </div>
               <div class="status-item">
@@ -211,15 +211,17 @@
                   class="status-bar"
                   :style="{
                     width: `${(statistics.draftArticles / statistics.totalArticles) * 100}%`,
-                    background: '#909399'
+                    background: '#909399',
                   }"
                 />
                 <div class="status-info">
                   <span class="status-label">草稿</span>
-                  <span class="status-value">{{ statistics.draftArticles }}
-
-</span>
-                  <span class="status-percent">{{ Math.round((statistics.draftArticles / statistics.totalArticles) * 100) }}%</span>
+                  <span class="status-value">{{ statistics.draftArticles }} </span>
+                  <span class="status-percent"
+                    >{{
+                      Math.round((statistics.draftArticles / statistics.totalArticles) * 100)
+                    }}%</span
+                  >
                 </div>
               </div>
               <div class="status-item">
@@ -227,15 +229,17 @@
                   class="status-bar"
                   :style="{
                     width: `${(statistics.archivedArticles / statistics.totalArticles) * 100}%`,
-                    background: '#e6a23c'
+                    background: '#e6a23c',
                   }"
                 />
                 <div class="status-info">
                   <span class="status-label">已归档</span>
-                  <span class="status-value">{{ statistics.archivedArticles }}
-
-</span>
-                  <span class="status-percent">{{ Math.round((statistics.archivedArticles / statistics.totalArticles) * 100) }}%</span>
+                  <span class="status-value">{{ statistics.archivedArticles }} </span>
+                  <span class="status-percent"
+                    >{{
+                      Math.round((statistics.archivedArticles / statistics.totalArticles) * 100)
+                    }}%</span
+                  >
                 </div>
               </div>
             </div>
@@ -261,11 +265,7 @@
               </el-link>
             </div>
           </template>
-          <el-table
-            :data="hotArticles"
-            :show-header="false"
-            style="width: 100%"
-          >
+          <el-table :data="hotArticles" :show-header="false" style="width: 100%">
             <el-table-column width="50" align="center">
               <template #default="{ $index }">
                 <el-tag
@@ -274,20 +274,15 @@
                   size="small"
                 >
                   {{ $index + 1 }}
-
                 </el-tag>
                 <span v-else class="text-gray-500">{{ $index + 1 }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="title" show-overflow-tooltip>
               <template #default="{ row }">
-                <div class="article-title">{{ row.title }}
-
-</div>
+                <div class="article-title">{{ row.title }}</div>
                 <div class="article-meta">
-                  <span>{{ row.author }}
-
-</span>
+                  <span>{{ row.author }} </span>
                   <span class="mx-2">·</span>
                   <span>{{ row.categoryName }}</span>
                 </div>
@@ -298,15 +293,11 @@
                 <div class="flex items-center justify-end gap-3">
                   <div class="stat-item">
                     <i class="i-ep-view text-gray-500" />
-                    <span class="text-sm">{{ formatNumber(row.viewCount) }}
-
-</span>
+                    <span class="text-sm">{{ formatNumber(row.viewCount) }} </span>
                   </div>
                   <div class="stat-item">
                     <i class="i-ep-star text-gray-500" />
-                    <span class="text-sm">{{ row.likeCount }}
-
-</span>
+                    <span class="text-sm">{{ row.likeCount }} </span>
                   </div>
                 </div>
               </template>
@@ -332,25 +323,29 @@
               :key="activity.id"
               :timestamp="activity.time"
               placement="top"
-              :color="activity.type === 'publish' ? '#67c23a' : activity.type === 'comment' ? '#409eff' : '#909399'"
+              :color="
+                activity.type === 'publish'
+                  ? '#67c23a'
+                  : activity.type === 'comment'
+                    ? '#409eff'
+                    : '#909399'
+              "
             >
               <div class="activity-item">
                 <div class="activity-icon">
                   <i
                     :class="[
-                      activity.type === 'publish' ? 'i-ep-upload' :
-                      activity.type === 'comment' ? 'i-ep-chat-dot-round' :
-                      'i-ep-edit'
+                      activity.type === 'publish'
+                        ? 'i-ep-upload'
+                        : activity.type === 'comment'
+                          ? 'i-ep-chat-dot-round'
+                          : 'i-ep-edit',
                     ]"
                   />
                 </div>
                 <div class="activity-content">
-                  <div class="activity-text">{{ activity.content }}
-
-</div>
-                  <div class="activity-user">{{ activity.user }}
-
-</div>
+                  <div class="activity-text">{{ activity.content }}</div>
+                  <div class="activity-user">{{ activity.user }}</div>
                 </div>
               </div>
             </el-timeline-item>
@@ -374,9 +369,7 @@
                 </div>
                 <div class="status-info">
                   <div class="status-title">系统运行时间</div>
-                  <div class="status-value">{{ systemStats.uptime }}
-
-</div>
+                  <div class="status-value">{{ systemStats.uptime }}</div>
                 </div>
               </div>
             </el-col>
@@ -387,9 +380,7 @@
                 </div>
                 <div class="status-info">
                   <div class="status-title">平均响应时间</div>
-                  <div class="status-value">{{ systemStats.responseTime }}
-
-</div>
+                  <div class="status-value">{{ systemStats.responseTime }}</div>
                 </div>
               </div>
             </el-col>
@@ -400,9 +391,7 @@
                 </div>
                 <div class="status-info">
                   <div class="status-title">错误率</div>
-                  <div class="status-value">{{ systemStats.errorRate }}
-
-</div>
+                  <div class="status-value">{{ systemStats.errorRate }}</div>
                 </div>
               </div>
             </el-col>
@@ -413,9 +402,7 @@
                 </div>
                 <div class="status-info">
                   <div class="status-title">存储使用</div>
-                  <div class="status-value">{{ systemStats.storageUsage }}
-
-</div>
+                  <div class="status-value">{{ systemStats.storageUsage }}</div>
                 </div>
               </div>
             </el-col>
@@ -427,20 +414,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, watch }
-
- from 'vue'
-import { ElMessageBox }
-
- from 'element-plus'
-import * as contentapi from '@/api/content'
-import * as analyticsapi from '@/api/analytics'
-import type { Article, ArticleStatistics }
-
- from '@/types/content'
-import type { TrendData, Activity, OverviewStatistics }
-
- from '@/api/analytics'
+import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
+import { ElMessageBox } from 'element-plus'
+import * as contentApi from '@/api/content'
+import * as analyticsApi from '@/api/analytics'
+import type { Article, ArticleStatistics } from '@/types/content'
+import type { TrendData, Activity, OverviewStatistics } from '@/api/analytics'
 import {
   buildMockArticleStatistics,
   buildMockOverviewStatistics,
@@ -496,7 +475,7 @@ const applyArticleStatistics = (articleStats: ArticleStatistics) => {
   statistics.archivedArticles = articleStats.archivedCount || 0
 }
 
-const applyoverviewstatistics = (overview: OverviewStatistics) => {
+const applyOverviewStatistics = (overview: OverviewStatistics) => {
   statistics.totalUsers = overview.users?.total || 0
   statistics.todayUsers = overview.users?.today || 0
   statistics.todayViews = overview.content?.todayViews || 0
@@ -523,7 +502,7 @@ const formatNumber = (num: number): string => {
 /**
  * 显示图表集成提示
  */
-const showcharttip = () => {
+const showChartTip = () => {
   ElMessageBox.alert(
     `
       <div style="text-align: left;">
@@ -560,7 +539,7 @@ app.component('v-chart', ECharts)
 /**
  * 获取统计数据
  */
-const fetchstatistics = async () => {
+const fetchStatistics = async () => {
   const articleStats = await contentApi.getArticleStatistics().catch(() => null)
   applyArticleStatistics(articleStats ?? buildMockArticleStatistics())
 
@@ -571,47 +550,44 @@ const fetchstatistics = async () => {
 /**
  * 获取趋势数据
  */
-const fetchtrenddata = async () => {
+const fetchTrendData = async () => {
   trendLoading.value = true
   const response = await analyticsApi
     .getTrendData(Number(trendPeriod.value))
     .catch(() => [] as TrendData[])
 
   trendData.value =
-    response && response.length > 0
-      ? response
-      : buildmocktrenddata(number(trendperiod.value))
+    response && response.length > 0 ? response : buildMockTrendData(Number(trendPeriod.value))
 
-  trendloading.value = falsetrueconstresponseawaitanalyticsApi.getTrendDataNumber.catchasTrendDatatrendData.valueresponseresponse.length0response
+  trendLoading.value = false
 }
 
 /**
  * 获取热门文章
  */
-const fetchhotarticles = async () => {
+const fetchHotArticles = async () => {
   const result = await contentApi
     .getArticleList({
-      page: 1,;
+      page: 1,
       pageSize: 50, // 获取更多数据用于排序
     })
     .catch(() => null)
 
-  hotarticles.value =
-    result?.list?.length
-      ? result.list
-          .slice()
-          .sort((a, b) => b.viewcount - a.viewcount)
-          .slice(0, 10)
-      : buildmockhotarticles()
+  hotArticles.value = result?.list?.length
+    ? result.list
+        .slice()
+        .sort((a, b) => b.viewCount - a.viewCount)
+        .slice(0, 10)
+    : buildMockHotArticles()
 }
 
 /**
  * 获取最新动态
  */
-const fetchactivities = async () => {
+const fetchActivities = async () => {
   const response = await analyticsApi.getActivities(10).catch(() => [] as Activity[])
 
-  recentActivities.value = response.length > 0 ? response : buildmockactivities()responseawaitanalyticsApi.getActivities.catchasActivityrecentActivities.valueresponse.length0response
+  recentActivities.value = response.length > 0 ? response : buildMockActivities()
 }
 
 // 监听趋势周期变化 - 添加防抖
@@ -633,17 +609,10 @@ const fetchAllData = async () => {
   loading.value = true
   try {
     // 并行获取所有数据
-    await Promise.all([
-      fetchStatistics(),
-      fetchHotArticles(),
-      fetchTrendData(),
-      fetchActivities()
-    ])
+    await Promise.all([fetchStatistics(), fetchHotArticles(), fetchTrendData(), fetchActivities()])
   } catch (error) {
     console.error('数据获取失败:', error)
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -697,9 +666,13 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
 
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 // 统计卡片样式
@@ -1122,9 +1095,13 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
 
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 // 加载文本

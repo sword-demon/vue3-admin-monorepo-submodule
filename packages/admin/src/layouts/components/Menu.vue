@@ -10,7 +10,7 @@
     :active-text-color="activeTextColor"
     @select="handleSelect"
   >
-    <menu-item
+    <MenuItem
       v-for="menuRoute in menuRoutes"
       :key="menuRoute.path"
       :item="menuRoute"
@@ -20,27 +20,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed }
+import { computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { usePermissionStore } from '@/stores/permission'
+import MenuItem from './MenuItem.vue'
 
- from 'vue'
-import { useRouter, useRoute }
-
- from 'vue-router'
-import { usePermissionStore }
-
- from '@/stores/permission'
-import menuitem from './MenuItem.vue'
-
-interface props {
+interface Props {
   /** 是否折叠 */
   collapse?: boolean
-  /** 菜单模式 */;
+  /** 菜单模式 */
   mode?: 'vertical' | 'horizontal'
-  /** 背景色 */;
+  /** 背景色 */
   backgroundColor?: string
-  /** 文字颜色 */;
+  /** 文字颜色 */
   textColor?: string
-  /** 激活文字颜色 */;
+  /** 激活文字颜色 */
   activeTextColor?: string
 }
 
@@ -76,7 +70,6 @@ const menuRoutes = computed(() => {
 const handleSelect = (index: string) => {
   router.push(index)
 }
-
 </script>
 
 <style scoped lang="scss">

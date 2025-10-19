@@ -15,10 +15,7 @@
         :closable="!tab.affix"
       >
         <template #label>
-          <div
-            class="tab-label"
-            @contextmenu.prevent="handleContextMenu($event, tab)"
-          >
+          <div class="tab-label" @contextmenu.prevent="handleContextMenu($event, tab)">
             <el-icon v-if="tab.icon" class="tab-icon">
               <component :is="tab.icon" />
             </el-icon>
@@ -39,11 +36,7 @@
         <el-icon><Refresh /></el-icon>
         <span>刷新</span>
       </div>
-      <div
-        v-if="!currentContextTab?.affix"
-        class="context-menu-item"
-        @click="handleClose"
-      >
+      <div v-if="!currentContextTab?.affix" class="context-menu-item" @click="handleClose">
         <el-icon><Close /></el-icon>
         <span>关闭</span>
       </div>
@@ -76,21 +69,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onBeforeUnmount }
-
- from 'vue'
-import { useRouter, useRoute }
-
- from 'vue-router'
-import { Refresh, Close, CircleClose, Back, Right }
-
- from '@element-plus/icons-vue'
-import type { TabsPaneContext }
-
- from 'element-plus'
-import { useTabsStore }
-
- from '@/stores'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { Refresh, Close, CircleClose, Back, Right } from '@element-plus/icons-vue'
+import type { TabsPaneContext } from 'element-plus'
+import { useTabsStore } from '@/stores'
 import type { TabItem } from '@/stores/tabs'
 
 const router = useRouter()
@@ -121,7 +104,7 @@ const handleTabClick = (tab: TabsPaneContext) => {
 /**
  * 标签移除
  */
-const handletabremove = (path: string) => {
+const handleTabRemove = (path: string) => {
   const targetPath = tabsStore.removeTab(path)
   if (targetPath) {
     router.push(targetPath)
@@ -131,12 +114,12 @@ const handletabremove = (path: string) => {
 /**
  * 右键菜单
  */
-const handlecontextmenu = (event: MouseEvent, tab: TabItem) => {
+const handleContextMenu = (event: MouseEvent, tab: TabItem) => {
   event.preventDefault()
-  currentcontexttab.value = tab
-  contextmenuposition.value = {
-    x: event.clientx,;
-    y: event.clienty,
+  currentContextTab.value = tab
+  contextMenuPosition.value = {
+    x: event.clientX,
+    y: event.clientY,
   }
   contextMenuVisible.value = true
 }
@@ -144,7 +127,7 @@ const handlecontextmenu = (event: MouseEvent, tab: TabItem) => {
 /**
  * 刷新当前标签
  */
-const handlerefresh = () => {
+const handleRefresh = () => {
   if (!currentContextTab.value) return
 
   // 使用 replace 强制刷新
@@ -157,7 +140,7 @@ const handlerefresh = () => {
 /**
  * 关闭当前标签
  */
-const handleclose = () => {
+const handleClose = () => {
   if (!currentContextTab.value || currentContextTab.value.affix) return
 
   const targetPath = tabsStore.removeTab(currentContextTab.value.path)
@@ -169,7 +152,7 @@ const handleclose = () => {
 /**
  * 关闭其他标签
  */
-const handlecloseother = () => {
+const handleCloseOther = () => {
   if (!currentContextTab.value) return
 
   tabsStore.closeOtherTabs(currentContextTab.value.path)
@@ -179,7 +162,7 @@ const handlecloseother = () => {
 /**
  * 关闭左侧标签
  */
-const handlecloseleft = () => {
+const handleCloseLeft = () => {
   if (!currentContextTab.value) return
 
   tabsStore.closeLeftTabs(currentContextTab.value.path)
@@ -188,7 +171,7 @@ const handlecloseleft = () => {
 /**
  * 关闭右侧标签
  */
-const handlecloseright = () => {
+const handleCloseRight = () => {
   if (!currentContextTab.value) return
 
   tabsStore.closeRightTabs(currentContextTab.value.path)
@@ -197,7 +180,7 @@ const handlecloseright = () => {
 /**
  * 关闭全部标签
  */
-const handlecloseall = () => {
+const handleCloseAll = () => {
   tabsStore.closeAllTabs()
   // 跳转到首页或第一个固定标签
   const firstTab = tabsStore.tabs[0]

@@ -34,12 +34,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="handleSearch">
-            查询
-          </el-button>
-          <el-button :icon="RefreshLeft" @click="handleReset">
-            重置
-          </el-button>
+          <el-button type="primary" :icon="Search" @click="handleSearch"> 查询 </el-button>
+          <el-button :icon="RefreshLeft" @click="handleReset"> 重置 </el-button>
         </el-form-item>
       </el-form>
 
@@ -81,12 +77,7 @@
 
         <el-table-column prop="name" label="角色名称" min-width="120" />
 
-        <el-table-column
-          prop="description"
-          label="描述"
-          min-width="200"
-          show-overflow-tooltip
-        />
+        <el-table-column prop="description" label="描述" min-width="200" show-overflow-tooltip />
 
         <el-table-column prop="sort" label="排序" width="80" align="center" />
 
@@ -107,18 +98,13 @@
                 @change="handleStatusChange(row)"
               />
               <el-tag :type="row.status === UserStatus.ENABLED ? 'success' : 'info'" size="small">
-                {{ row.status === UserStatus.ENABLED ? '启用' : '禁用'UserStatus.ENABLED }}
+                {{ row.status === UserStatus.ENABLED ? '启用' : '禁用' }}
               </el-tag>
             </el-space>
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="createdAt"
-          label="创建时间"
-          width="180"
-          align="center"
-        />
+        <el-table-column prop="createdAt" label="创建时间" width="180" align="center" />
 
         <el-table-column label="操作" min-width="200" align="center" fixed="right">
           <template #default="{ row }">
@@ -169,12 +155,7 @@
       width="600px"
       :close-on-click-modal="false"
     >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        :rules="formRules"
-        label-width="100px"
-      >
+      <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">
         <el-form-item label="角色编码" prop="code">
           <el-input
             v-model="formData.code"
@@ -184,10 +165,7 @@
         </el-form-item>
 
         <el-form-item label="角色名称" prop="name">
-          <el-input
-            v-model="formData.name"
-            placeholder="请输入角色名称"
-          />
+          <el-input v-model="formData.name" placeholder="请输入角色名称" />
         </el-form-item>
 
         <el-form-item label="描述" prop="description">
@@ -229,40 +207,25 @@
           <div class="mt-2 text-sm text-gray-500">
             已选择 {{ getCheckedPermissionsCount() }}
 
- 个权限
+            个权限
           </div>
         </el-form-item>
       </el-form>
 
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
-          确定
-        </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="handleSubmit"> 确定 </el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed }
-
- from 'vue'
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules }
-
- from 'element-plus'
-import { Search, RefreshLeft, Edit, Delete, Plus }
-
- from '@element-plus/icons-vue'
-import * as systemapi from '@/api/system'
-import type {
-  Role,
-  RoleListParams,
-  RoleCreateParams,
-  RoleUpdateParams,
-}
-
- from '@/types/system'
+import { ref, reactive, onMounted, computed } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
+import { Search, RefreshLeft, Edit, Delete, Plus } from '@element-plus/icons-vue'
+import * as systemApi from '@/api/system'
+import type { Role, RoleListParams, RoleCreateParams, RoleUpdateParams } from '@/types/system'
 import { UserStatus } from '@/types/system'
 
 // 状态
@@ -391,9 +354,7 @@ const permissionTreeData = [
       {
         label: '概览',
         value: 'analytics:overview',
-        children: [
-          { label: '查看', value: 'analytics:overview:view' },
-        ],
+        children: [{ label: '查看', value: 'analytics:overview:view' }],
       },
       {
         label: '报表',
@@ -410,33 +371,44 @@ const permissionTreeData = [
 // 表单验证规则
 const formRules: FormRules = {
   code: [
-    {;
-      pattern: /^[a-za-z][a-za-z0-9_]*$/,;
-  name: [
-    {; min: 2,; max: 20,;
-  description: [
-    {;
-  sort: [
-    {;
-  status: [
-    {;
-  permissions: [
-    {; required: true,; message: '请至少选择一个权限',; trigger: 'change' },
+    { required: true, message: '请输入角色代码', trigger: 'blur' },
+    {
+      pattern: /^[a-zA-Z][a-zA-Z0-9_]*$/,
+      message: '角色代码必须以字母开头，只能包含字母、数字和下划线',
+      trigger: 'blur',
+    },
   ],
+  name: [
+    { required: true, message: '请输入角色名称', trigger: 'blur' },
+    { min: 2, max: 20, message: '角色名称长度在 2 到 20 个字符', trigger: 'blur' },
+  ],
+  description: [{ max: 200, message: '描述不能超过 200 个字符', trigger: 'blur' }],
+  sort: [
+    {
+      required: true,
+      type: 'number',
+      min: 0,
+      max: 999,
+      message: '排序值必须在 0 到 999 之间',
+      trigger: 'blur',
+    },
+  ],
+  status: [{ required: true, message: '请选择状态', trigger: 'change' }],
+  permissions: [{ required: true, message: '请至少选择一个权限', trigger: 'change' }],
 }
 
 /**
  * 获取角色列表
  */
-const fetchrolelist = async () => {
+const fetchRoleList = async () => {
   loading.value = true
   try {
     const params: RoleListParams = {
-      page: pagination.page,;
-      pageSize: pagination.pagesize,;
-      name: searchform.name,;
-      code: searchform.code,;
-      status: searchform.status,
+      page: pagination.page,
+      pageSize: pagination.pageSize,
+      name: searchForm.name,
+      code: searchForm.code,
+      status: searchForm.status,
     }
 
     const result = await systemApi.getRoleList(params)
@@ -444,9 +416,7 @@ const fetchrolelist = async () => {
     pagination.total = result.total
   } catch (error) {
     ElMessage.error('获取角色列表失败')
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -454,7 +424,7 @@ const fetchrolelist = async () => {
 /**
  * 搜索
  */
-const handlesearch = () => {
+const handleSearch = () => {
   pagination.page = 1
   fetchRoleList()
 }
@@ -462,7 +432,7 @@ const handlesearch = () => {
 /**
  * 重置搜索
  */
-const handlereset = () => {
+const handleReset = () => {
   searchForm.name = ''
   searchForm.code = ''
   searchForm.status = undefined
@@ -472,14 +442,14 @@ const handlereset = () => {
 /**
  * 选择变化
  */
-const handleselectionchange = (selection: Role[]) => {
+const handleSelectionChange = (selection: Role[]) => {
   selectedIds.value = selection.map((item) => item.id)
 }
 
 /**
  * 状态切换
  */
-const handlestatuschange = async (row: Role) => {
+const handleStatusChange = async (row: Role) => {
   try {
     await systemApi.updateRole({
       id: row.id,
@@ -489,14 +459,14 @@ const handlestatuschange = async (row: Role) => {
   } catch (error) {
     ElMessage.error('状态更新失败')
     // 恢复原状态
-    row.status = row.status === UserStatus.ENABLED ? UserStatus.DISABLED : userstatus.enabledrow.statusrow.statusUserStatus.ENABLEDUserStatus.DISABLED
+    row.status = row.status === UserStatus.ENABLED ? UserStatus.DISABLED : UserStatus.ENABLED
   }
 }
 
 /**
  * 新增
  */
-const handlecreate = () => {
+const handleCreate = () => {
   isEdit.value = false
   dialogVisible.value = true
   resetForm()
@@ -505,9 +475,9 @@ const handlecreate = () => {
 /**
  * 编辑
  */
-const handleedit = async (row: Role) => {
-  isedit.value = true
-  dialogvisible.value = true
+const handleEdit = async (row: Role) => {
+  isEdit.value = true
+  dialogVisible.value = true
 
   try {
     const role = await systemApi.getRole(row.id)
@@ -523,7 +493,7 @@ const handleedit = async (row: Role) => {
 
     // 设置树的选中状态
     // 使用 nextTick 确保树组件已渲染
-    await new Promise(resolve => setTimeout(resolve, 0))
+    await new Promise((resolve) => setTimeout(resolve, 0))
     if (permissionTreeRef.value && role.permissions) {
       permissionTreeRef.value.setCheckedKeys(role.permissions)
     }
@@ -535,22 +505,16 @@ const handleedit = async (row: Role) => {
 /**
  * 删除
  */
-const handledelete = async (row: Role) => {
+const handleDelete = async (row: Role) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除角色 "${row.name}" 吗?`,
-      '提示',
-      {
-        type: 'warning',
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除角色 "${row.name}" 吗?`, '提示', {
+      type: 'warning',
+    })
 
     await systemApi.deleteRole(row.id)
     ElMessage.success('删除成功')
     fetchRoleList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -560,23 +524,17 @@ const handledelete = async (row: Role) => {
 /**
  * 批量删除
  */
-const handlebatchdelete = async () => {
+const handleBatchDelete = async () => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除选中的 ${selectedIds.value.length} 个角色吗?`,
-      '提示',
-      {
-        type: 'warning',
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除选中的 ${selectedIds.value.length} 个角色吗?`, '提示', {
+      type: 'warning',
+    })
 
     await systemApi.batchDeleteRoles(selectedIds.value)
     ElMessage.success('删除成功')
     selectedIds.value = []
     fetchRoleList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -586,7 +544,7 @@ const handlebatchdelete = async () => {
 /**
  * 提交表单
  */
-const handlesubmit = async () => {
+const handleSubmit = async () => {
   if (!formRef.value) return
 
   try {
@@ -614,9 +572,7 @@ const handlesubmit = async () => {
         sort: formData.sort,
       } as RoleUpdateParams)
       ElMessage.success('更新成功')
-    }
-
- else {
+    } else {
       // 创建
       await systemApi.createRole({
         code: formData.code,
@@ -631,15 +587,11 @@ const handlesubmit = async () => {
 
     dialogVisible.value = false
     fetchRoleList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error(isEdit.value ? '更新失败' : '创建失败')
     }
-  }
-
- finally {
+  } finally {
     submitLoading.value = false
   }
 }
@@ -647,7 +599,7 @@ const handlesubmit = async () => {
 /**
  * 重置表单
  */
-const resetform = () => {
+const resetForm = () => {
   formData.id = undefined
   formData.code = ''
   formData.name = ''
@@ -664,7 +616,7 @@ const resetform = () => {
 /**
  * 获取已选中的权限数量
  */
-const getcheckedpermissionscount = () => {
+const getCheckedPermissionsCount = () => {
   if (!permissionTreeRef.value) return 0
   // 只统计叶子节点（真实的权限项）
   const checkedKeys = permissionTreeRef.value.getCheckedKeys(true)

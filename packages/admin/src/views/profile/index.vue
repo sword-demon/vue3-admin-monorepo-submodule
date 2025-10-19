@@ -22,30 +22,20 @@
               </el-button>
             </div>
 
-            <h3 class="username">{{ userInfo.realName }}
-
-</h3>
-            <p class="user-role">{{ userInfo.roles?.join(' / ') || '暂无角色' }}
-
-</p>
+            <h3 class="username">{{ userInfo.realName }}</h3>
+            <p class="user-role">{{ userInfo.roles?.join(' / ') || '暂无角色' }}</p>
 
             <div class="user-stats">
               <div class="stat-item">
-                <div class="stat-value">{{ userInfo.articleCount || 0 }}
-
-</div>
+                <div class="stat-value">{{ userInfo.articleCount || 0 }}</div>
                 <div class="stat-label">文章数</div>
               </div>
               <div class="stat-item">
-                <div class="stat-value">{{ userInfo.followCount || 0 }}
-
-</div>
+                <div class="stat-value">{{ userInfo.followCount || 0 }}</div>
                 <div class="stat-label">关注</div>
               </div>
               <div class="stat-item">
-                <div class="stat-value">{{ userInfo.fansCount || 0 }}
-
-</div>
+                <div class="stat-value">{{ userInfo.fansCount || 0 }}</div>
                 <div class="stat-label">粉丝</div>
               </div>
             </div>
@@ -56,39 +46,27 @@
               <div class="detail-item">
                 <i class="i-ep-user text-gray-500" />
                 <span class="detail-label">用户名:</span>
-                <span class="detail-value">{{ userInfo.username }}
-
-</span>
+                <span class="detail-value">{{ userInfo.username }} </span>
               </div>
               <div class="detail-item">
                 <i class="i-ep-message text-gray-500" />
                 <span class="detail-label">邮箱:</span>
-                <span class="detail-value">{{ userInfo.email }}
-
-</span>
+                <span class="detail-value">{{ userInfo.email }} </span>
               </div>
               <div class="detail-item">
                 <i class="i-ep-phone text-gray-500" />
                 <span class="detail-label">手机:</span>
-                <span class="detail-value">{{ userInfo.phone }}
-
-</span>
+                <span class="detail-value">{{ userInfo.phone }} </span>
               </div>
               <div class="detail-item">
                 <i class="i-ep-office-building text-gray-500" />
                 <span class="detail-label">部门:</span>
-                <span class="detail-value">{{ userInfo.department }}
-
-</span>
+                <span class="detail-value">{{ userInfo.department }} </span>
               </div>
               <div class="detail-item">
                 <i class="i-ep-calendar text-gray-500" />
                 <span class="detail-label">加入时间:</span>
-                <span class="detail-value">{{
-                  userInfo.createdAt?.split(' ')[0]
-                }}
-
-</span>
+                <span class="detail-value">{{ userInfo.createdAt?.split(' ')[0] }} </span>
               </div>
               <div v-if="userInfo.lastLoginTime" class="detail-item">
                 <i class="i-ep-clock text-gray-500" />
@@ -113,10 +91,7 @@
                 label-width="100px"
               >
                 <el-form-item label="真实姓名" prop="realName">
-                  <el-input
-                    v-model="basicForm.realName"
-                    placeholder="请输入真实姓名"
-                  />
+                  <el-input v-model="basicForm.realName" placeholder="请输入真实姓名" />
                 </el-form-item>
 
                 <el-form-item label="邮箱" prop="email">
@@ -163,15 +138,8 @@
           <!-- 修改密码 -->
           <el-tab-pane label="修改密码" name="password">
             <el-card shadow="never">
-              <el-alert
-                type="warning"
-                :closable="false"
-                class="mb-4"
-                show-icon
-              >
-                <template #title>
-                  密码强度要求:至少8位,包含大小写字母、数字和特殊字符
-                </template>
+              <el-alert type="warning" :closable="false" class="mb-4" show-icon>
+                <template #title> 密码强度要求:至少8位,包含大小写字母、数字和特殊字符 </template>
               </el-alert>
 
               <el-form
@@ -229,21 +197,15 @@
                 <el-form label-width="150px">
                   <el-form-item label="邮件通知">
                     <el-switch v-model="settings.emailNotification" />
-                    <span class="text-sm text-gray-500 ml-2"
-                      >接收系统重要通知邮件</span
-                    >
+                    <span class="text-sm text-gray-500 ml-2">接收系统重要通知邮件</span>
                   </el-form-item>
                   <el-form-item label="站内消息">
                     <el-switch v-model="settings.siteNotification" />
-                    <span class="text-sm text-gray-500 ml-2"
-                      >接收站内消息通知</span
-                    >
+                    <span class="text-sm text-gray-500 ml-2">接收站内消息通知</span>
                   </el-form-item>
                   <el-form-item label="评论通知">
                     <el-switch v-model="settings.commentNotification" />
-                    <span class="text-sm text-gray-500 ml-2"
-                      >有人评论我的内容时通知我</span
-                    >
+                    <span class="text-sm text-gray-500 ml-2">有人评论我的内容时通知我</span>
                   </el-form-item>
                 </el-form>
               </div>
@@ -255,15 +217,11 @@
                 <el-form label-width="150px">
                   <el-form-item label="公开资料">
                     <el-switch v-model="settings.publicProfile" />
-                    <span class="text-sm text-gray-500 ml-2"
-                      >允许其他用户查看我的资料</span
-                    >
+                    <span class="text-sm text-gray-500 ml-2">允许其他用户查看我的资料</span>
                   </el-form-item>
                   <el-form-item label="显示在线状态">
                     <el-switch v-model="settings.showOnlineStatus" />
-                    <span class="text-sm text-gray-500 ml-2"
-                      >向其他用户显示我的在线状态</span
-                    >
+                    <span class="text-sm text-gray-500 ml-2">向其他用户显示我的在线状态</span>
                   </el-form-item>
                 </el-form>
               </div>
@@ -283,11 +241,7 @@
               </div>
 
               <div class="mt-4">
-                <el-button
-                  type="primary"
-                  :loading="settingsLoading"
-                  @click="handleSettingsSave"
-                >
+                <el-button type="primary" :loading="settingsLoading" @click="handleSettingsSave">
                   保存设置
                 </el-button>
               </div>
@@ -299,24 +253,14 @@
             <el-card shadow="never">
               <el-tabs v-model="activityTab" class="activity-tabs">
                 <el-tab-pane label="登录记录" name="login">
-                  <el-table
-                    v-loading="activityLoading"
-                    :data="loginRecords"
-                    stripe
-                  >
-                    <el-table-column
-                      prop="loginTime"
-                      label="登录时间"
-                      width="180"
-                    />
+                  <el-table v-loading="activityLoading" :data="loginRecords" stripe>
+                    <el-table-column prop="loginTime" label="登录时间" width="180" />
                     <el-table-column prop="ip" label="IP地址" width="150" />
                     <el-table-column prop="location" label="登录地点" />
                     <el-table-column prop="device" label="设备" />
                     <el-table-column label="状态" width="100" align="center">
                       <template #default="{ row }">
-                        <el-tag
-                          :type="row.status === 'success' ? 'success' : 'danger'"
-                        >
+                        <el-tag :type="row.status === 'success' ? 'success' : 'danger'">
                           {{ row.status === 'success' ? '成功' : '失败' }}
                         </el-tag>
                       </template>
@@ -336,30 +280,15 @@
                 </el-tab-pane>
 
                 <el-tab-pane label="操作日志" name="operation">
-                  <el-table
-                    v-loading="activityLoading"
-                    :data="operationLogs"
-                    stripe
-                  >
-                    <el-table-column
-                      prop="operationTime"
-                      label="操作时间"
-                      width="180"
-                    />
+                  <el-table v-loading="activityLoading" :data="operationLogs" stripe>
+                    <el-table-column prop="operationTime" label="操作时间" width="180" />
                     <el-table-column prop="module" label="模块" width="120" />
                     <el-table-column prop="action" label="操作" width="120" />
-                    <el-table-column
-                      prop="description"
-                      label="描述"
-                      show-overflow-tooltip
-                    />
+                    <el-table-column prop="description" label="描述" show-overflow-tooltip />
                     <el-table-column label="状态" width="100" align="center">
                       <template #default="{ row }">
-                        <el-tag
-                          :type="row.status === 'success' ? 'success' : 'danger'"
-                        >
+                        <el-tag :type="row.status === 'success' ? 'success' : 'danger'">
                           {{ row.status === 'success' ? '成功' : '失败' }}
-
                         </el-tag>
                       </template>
                     </el-table-column>
@@ -407,11 +336,7 @@
 
       <template #footer>
         <el-button @click="avatarDialogVisible = false">取消</el-button>
-        <el-button
-          type="primary"
-          :loading="avatarUploading"
-          @click="handleAvatarSubmit"
-        >
+        <el-button type="primary" :loading="avatarUploading" @click="handleAvatarSubmit">
           确定
         </el-button>
       </template>
@@ -420,21 +345,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted }
-
- from 'vue'
-import { ElMessage, type FormInstance, type FormRules, type UploadFile }
-
- from 'element-plus'
-import type { User }
-
- from '@/types/system'
+import { ref, reactive, onMounted } from 'vue'
+import { ElMessage, type FormInstance, type FormRules, type UploadFile } from 'element-plus'
+import type { User } from '@/types/system'
 import { UserGender } from '@/types/system'
 
 // ========== 用户信息 ==========
 interface UserInfoExtended extends User {
-  articleCount?: number;
-  followCount?: number;
+  articleCount?: number
+  followCount?: number
   fansCount?: number
 }
 
@@ -475,14 +394,13 @@ const basicForm = reactive({
 })
 
 const basicFormRules: FormRules = {
-  realName: [
-    {; min: 2,; max: 20,;
-  email: [
-    {; type: 'email',;
+  realName: [{ min: 2, max: 20, message: '真实姓名长度在 2 到 20 个字符', trigger: 'blur' }],
+  email: [{ type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }],
   phone: [
-    {; required: true,;
-      pattern: /^1[3-9]\d{9}$/,;
-      message: '请输入正确的手机号格式',;
+    {
+      required: true,
+      pattern: /^1[3-9]\d{9}$/,
+      message: '请输入正确的手机号格式',
       trigger: 'blur',
     },
   ],
@@ -491,7 +409,7 @@ const basicFormRules: FormRules = {
 /**
  * 保存基本资料
  */
-const handlebasicformsubmit = async () => {
+const handleBasicFormSubmit = async () => {
   if (!basicFormRef.value) return
 
   try {
@@ -506,15 +424,11 @@ const handlebasicformsubmit = async () => {
     Object.assign(userInfo.value, basicForm)
 
     ElMessage.success('基本资料保存成功')
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('基本资料保存失败')
     }
-  }
-
- finally {
+  } finally {
     basicFormLoading.value = false
   }
 }
@@ -522,7 +436,7 @@ const handlebasicformsubmit = async () => {
 /**
  * 重置基本资料表单
  */
-const handlebasicformreset = () => {
+const handleBasicFormReset = () => {
   loadBasicFormData()
   basicFormRef.value?.clearValidate()
 }
@@ -530,7 +444,7 @@ const handlebasicformreset = () => {
 /**
  * 加载基本资料数据
  */
-const loadbasicformdata = () => {
+const loadBasicFormData = () => {
   basicForm.realName = userInfo.value.realName
   basicForm.email = userInfo.value.email
   basicForm.phone = userInfo.value.phone
@@ -552,27 +466,35 @@ const validateConfirmPassword = (rule: any, value: any, callback: any) => {
     callback(new Error('请再次输入密码'))
   } else if (value !== passwordForm.newPassword) {
     callback(new Error('两次输入密码不一致'))
-  }
-
- else {
+  } else {
     callback()
   }
 }
 
 const passwordFormRules: FormRules = {
-  oldPassword: [{;
+  oldPassword: [{ required: true, message: '请输入当前密码', trigger: 'blur' }],
   newPassword: [
-    {; min: 8,;
-      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]/,;
+    { required: true, min: 8, message: '密码长度至少8位', trigger: 'blur' },
+    {
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]/,
+      message: '密码必须包含大小写字母、数字和特殊字符',
+      trigger: 'blur',
+    },
+  ],
   confirmPassword: [
-    {; required: true,; message: '请再次输入新密码',; validator: validateconfirmpassword,; trigger: 'blur' },
+    {
+      required: true,
+      message: '请再次输入新密码',
+      validator: validateConfirmPassword,
+      trigger: 'blur',
+    },
   ],
 }
 
 /**
  * 修改密码
  */
-const handlepasswordformsubmit = async () => {
+const handlePasswordFormSubmit = async () => {
   if (!passwordFormRef.value) return
 
   try {
@@ -587,15 +509,11 @@ const handlepasswordformsubmit = async () => {
 
     // 清空表单
     handlePasswordFormReset()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('密码修改失败')
     }
-  }
-
- finally {
+  } finally {
     passwordFormLoading.value = false
   }
 }
@@ -603,7 +521,7 @@ const handlepasswordformsubmit = async () => {
 /**
  * 重置密码表单
  */
-const handlepasswordformreset = () => {
+const handlePasswordFormReset = () => {
   passwordForm.oldPassword = ''
   passwordForm.newPassword = ''
   passwordForm.confirmPassword = ''
@@ -634,9 +552,7 @@ const handleSettingsSave = async () => {
     ElMessage.success('设置保存成功')
   } catch (error) {
     ElMessage.error('设置保存失败')
-  }
-
- finally {
+  } finally {
     settingsLoading.value = false
   }
 }
@@ -658,7 +574,7 @@ const handleAvatarUpload = () => {
 /**
  * 头像选择变化
  */
-const handleavatarchange = (file: UploadFile) => {
+const handleAvatarChange = (file: UploadFile) => {
   if (file.raw) {
     avatarFile.value = file.raw
     avatarPreview.value = URL.createObjectURL(file.raw)
@@ -668,7 +584,7 @@ const handleavatarchange = (file: UploadFile) => {
 /**
  * 提交头像
  */
-const handleavatarsubmit = async () => {
+const handleAvatarSubmit = async () => {
   if (!avatarFile.value) {
     ElMessage.warning('请选择图片')
     return
@@ -687,29 +603,27 @@ const handleavatarsubmit = async () => {
     avatarDialogVisible.value = false
   } catch (error) {
     ElMessage.error('头像上传失败')
-  }
-
- finally {
+  } finally {
     avatarUploading.value = false
   }
 }
 
 // ========== 活动记录 ==========
 interface LoginRecord {
-  id: number;
-  loginTime: string;
-  ip: string;
-  location: string;
-  device: string;
+  id: number
+  loginTime: string
+  ip: string
+  location: string
+  device: string
   status: 'success' | 'failed'
 }
 
-interface operationlog {
-  id: number;
-  operationTime: string;
-  module: string;
-  action: string;
-  description: string;
+interface OperationLog {
+  id: number
+  operationTime: string
+  module: string
+  action: string
+  description: string
   status: 'success' | 'failed'
 }
 
@@ -733,33 +647,36 @@ const operationPagination = reactive({
  * 获取登录记录
  */
 const fetchLoginRecords = async () => {
-  activityloading.value = true
+  activityLoading.value = true
   try {
     // 模拟API调用
     await new Promise((resolve) => setTimeout(resolve, 500))
 
     // 模拟数据
-    const mockData: loginrecord[] = [
-      {;
+    const mockData: LoginRecord[] = [
+      {
+        id: 7,
+        loginTime: '2024-03-20 09:15:00',
+        ip: '123.45.67.89',
+        location: '上海市 浦东新区',
+        device: 'Chrome 123 / Windows 11',
         status: 'success',
       },
-      {;
-        id: 6,;
-        loginTime: '2024-03-18 16:00:00',;
-        ip: '123.45.67.89',;
-        location: '上海市 浦东新区',;
-        device: 'Firefox 123 / Windows 11',;
+      {
+        id: 6,
+        loginTime: '2024-03-18 16:00:00',
+        ip: '123.45.67.89',
+        location: '上海市 浦东新区',
+        device: 'Firefox 123 / Windows 11',
         status: 'failed',
       },
     ]
 
-    loginrecords.value = mockdata
-    loginpagination.total = mockdata.length
+    loginRecords.value = mockData
+    loginPagination.total = mockData.length
   } catch (error) {
     ElMessage.error('获取登录记录失败')
-  }
-
- finally {
+  } finally {
     activityLoading.value = false
   }
 }
@@ -767,34 +684,37 @@ const fetchLoginRecords = async () => {
 /**
  * 获取操作日志
  */
-const fetchoperationlogs = async () => {
-  activityloading.value = true
+const fetchOperationLogs = async () => {
+  activityLoading.value = true
   try {
     // 模拟API调用
     await new Promise((resolve) => setTimeout(resolve, 500))
 
     // 模拟数据
-    const mockData: operationlog[] = [
-      {;
+    const mockData: OperationLog[] = [
+      {
+        id: 6,
+        operationTime: '2024-03-20 10:30:00',
+        module: '用户管理',
+        action: '编辑用户',
+        description: '编辑用户信息',
         status: 'success',
       },
-      {;
-        id: 5,;
-        operationTime: '2024-03-19 16:30:00',;
-        module: '系统设置',;
-        action: '修改配置',;
-        description: '修改系统邮件配置',;
+      {
+        id: 5,
+        operationTime: '2024-03-19 16:30:00',
+        module: '系统设置',
+        action: '修改配置',
+        description: '修改系统邮件配置',
         status: 'failed',
       },
     ]
 
-    operationlogs.value = mockdata
-    operationpagination.total = mockdata.length
+    operationLogs.value = mockData
+    operationPagination.total = mockData.length
   } catch (error) {
     ElMessage.error('获取操作日志失败')
-  }
-
- finally {
+  } finally {
     activityLoading.value = false
   }
 }

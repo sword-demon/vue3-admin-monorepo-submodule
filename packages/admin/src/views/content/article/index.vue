@@ -46,12 +46,7 @@
             clearable
             style="width: 150px"
           >
-            <el-option
-              v-for="tag in tags"
-              :key="tag.id"
-              :label="tag.name"
-              :value="tag.id"
-            />
+            <el-option v-for="tag in tags" :key="tag.id" :label="tag.name" :value="tag.id" />
           </el-select>
         </el-form-item>
 
@@ -122,11 +117,7 @@
 
       <!-- 操作按钮 -->
       <div class="mb-4">
-        <el-button
-          v-permission="'content:article:create'"
-          type="primary"
-          @click="handleCreate"
-        >
+        <el-button v-permission="'content:article:create'" type="primary" @click="handleCreate">
           <template #icon>
             <Icon icon="ep:plus" />
           </template>
@@ -188,9 +179,7 @@
 
         <el-table-column label="状态" width="100" align="center">
           <template #default="{ row }">
-            <el-tag v-if="row.status === ArticleStatus.DRAFT" type="info">
-              草稿
-            </el-tag>
+            <el-tag v-if="row.status === ArticleStatus.DRAFT" type="info"> 草稿 </el-tag>
             <el-tag v-else-if="row.status === ArticleStatus.PUBLISHED" type="success">
               已发布
             </el-tag>
@@ -203,17 +192,13 @@
             <div class="article-stats">
               <div class="stat-item">
                 <View class="stat-icon view-icon" />
-                <span class="stat-value">{{ formatNumber(row.viewCount) }}
-
-</span>
+                <span class="stat-value">{{ formatNumber(row.viewCount) }} </span>
                 <span class="stat-label">浏览</span>
               </div>
               <div class="stat-divider"></div>
               <div class="stat-item">
                 <Star class="stat-icon like-icon" />
-                <span class="stat-value">{{ formatNumber(row.likeCount) }}
-
-</span>
+                <span class="stat-value">{{ formatNumber(row.likeCount) }} </span>
                 <span class="stat-label">点赞</span>
               </div>
               <div class="stat-divider"></div>
@@ -226,12 +211,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column
-          prop="publishedAt"
-          label="发布时间"
-          width="180"
-          align="center"
-        >
+        <el-table-column prop="publishedAt" label="发布时间" width="180" align="center">
           <template #default="{ row }">
             {{ row.publishedAt || '-' }}
           </template>
@@ -282,12 +262,7 @@
       width="800px"
       :close-on-click-modal="false"
     >
-      <el-form
-        ref="formRef"
-        :model="formData"
-        :rules="formRules"
-        label-width="100px"
-      >
+      <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">
         <el-form-item label="标题" prop="title">
           <el-input
             v-model="formData.title"
@@ -303,9 +278,7 @@
             placeholder="请输入URL友好的标识(如: my-article)"
             maxlength="100"
           />
-          <div class="text-xs text-gray-500 mt-1">
-            用于生成文章URL,只能包含字母、数字、连字符
-          </div>
+          <div class="text-xs text-gray-500 mt-1">用于生成文章URL,只能包含字母、数字、连字符</div>
         </el-form-item>
 
         <el-form-item label="摘要" prop="summary">
@@ -334,10 +307,7 @@
         </el-form-item>
 
         <el-form-item label="封面图" prop="cover">
-          <el-input
-            v-model="formData.cover"
-            placeholder="请输入封面图URL或点击上传"
-          >
+          <el-input v-model="formData.cover" placeholder="请输入封面图URL或点击上传">
             <template #append>
               <el-button>
                 <template #icon>
@@ -347,9 +317,7 @@
               </el-button>
             </template>
           </el-input>
-          <div class="text-xs text-gray-500 mt-1">
-            提示:实际项目中应集成图片上传组件
-          </div>
+          <div class="text-xs text-gray-500 mt-1">提示:实际项目中应集成图片上传组件</div>
           <div v-if="formData.cover" class="mt-2">
             <img :src="formData.cover" alt="封面预览" class="w-32 h-32 object-cover rounded" />
           </div>
@@ -358,11 +326,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="分类" prop="categoryId">
-              <el-select
-                v-model="formData.categoryId"
-                placeholder="请选择分类"
-                style="width: 100%"
-              >
+              <el-select v-model="formData.categoryId" placeholder="请选择分类" style="width: 100%">
                 <el-option
                   v-for="category in categories"
                   :key="category.id"
@@ -381,23 +345,17 @@
                 placeholder="请选择标签"
                 style="width: 100%"
               >
-                <el-option
-                  v-for="tag in tags"
-                  :key="tag.id"
-                  :label="tag.name"
-                  :value="tag.id"
-                >
+                <el-option v-for="tag in tags" :key="tag.id" :label="tag.name" :value="tag.id">
                   <span
                     :style="{
                       ...getTagStyle(tag.color),
                       padding: '2px 8px',
                       borderRadius: '4px',
                       fontSize: '12px',
-                      display: 'inline-block'
+                      display: 'inline-block',
                     }"
                   >
                     {{ tag.name }}
-
                   </span>
                 </el-option>
               </el-select>
@@ -408,11 +366,7 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="状态" prop="status">
-              <el-select
-                v-model="formData.status"
-                placeholder="请选择状态"
-                style="width: 100%"
-              >
+              <el-select v-model="formData.status" placeholder="请选择状态" style="width: 100%">
                 <el-option label="草稿" :value="ArticleStatus.DRAFT" />
                 <el-option label="已发布" :value="ArticleStatus.PUBLISHED" />
                 <el-option label="已归档" :value="ArticleStatus.ARCHIVED" />
@@ -422,21 +376,13 @@
 
           <el-col :span="8">
             <el-form-item label="置顶" prop="isTop">
-              <el-switch
-                v-model="formData.isTop"
-                active-text="是"
-                inactive-text="否"
-              />
+              <el-switch v-model="formData.isTop" active-text="是" inactive-text="否" />
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
             <el-form-item label="推荐" prop="isRecommend">
-              <el-switch
-                v-model="formData.isRecommend"
-                active-text="是"
-                inactive-text="否"
-              />
+              <el-switch v-model="formData.isRecommend" active-text="是" inactive-text="否" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -444,28 +390,18 @@
 
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" :loading="submitLoading" @click="handleSubmit">
-          确定
-        </el-button>
+        <el-button type="primary" :loading="submitLoading" @click="handleSubmit"> 确定 </el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed, watch }
-
- from 'vue'
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules }
-
- from 'element-plus'
-import { Icon }
-
- from '@iconify/vue'
-import { View, Star, ChatLineRound }
-
- from '@element-plus/icons-vue'
-import * as contentapi from '@/api/content'
+import { ref, reactive, onMounted, computed, watch } from 'vue'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
+import { Icon } from '@iconify/vue'
+import { View, Star, ChatLineRound } from '@element-plus/icons-vue'
+import * as contentApi from '@/api/content'
 import type {
   Article,
   ArticleListParams,
@@ -473,9 +409,7 @@ import type {
   ArticleUpdateParams,
   Category,
   Tag,
-}
-
- from '@/types/content'
+} from '@/types/content'
 import { ArticleStatus } from '@/types/content'
 
 // 状态
@@ -539,18 +473,20 @@ const dialogTitle = computed(() => (isEdit.value ? '编辑文章' : '新增文�
 const getTagStyle = (color: string) => {
   // 判断颜色是否为深色，调整背景色透明度以确保可读性
   const isDarkColor = isColorDark(color)
-  const backgroundColor = isDarkColor ? `${color}
+  const backgroundColor = isDarkColor
+    ? `${color}
 
-25` : `${color}
+25`
+    : `${color}
 
 15`
 
   return {
     backgroundColor,
-    borderColor: color,;
+    borderColor: color,
     color: color,
-    // 为深色背景增加更强的边框;
-    borderWidth: isdarkcolor; ? '1.5px' : '1px'
+    // 为深色背景增加更强的边框
+    borderWidth: isDarkColor ? '1.5px' : '1px',
   }
 }
 
@@ -597,43 +533,39 @@ watch(dateRange, (val) => {
 // 表单验证规则
 const formRules: FormRules = {
   title: [
-    {;
-  slug: [
-    {;
-      pattern: /^[a-z0-9-]+$/,;
-  summary: [
-    {; max: 200,;
-  content: [
-    {; min: 20,;
-  cover: [
-    {;
-  categoryId: [
-    {;
-  tagIds: [
-    {;
-  status: [
-    {; required: true,; message: '请选择状态',; trigger: 'change' },
+    { required: true, message: '请输入文章标题', trigger: 'blur' },
+    { min: 1, max: 100, message: '标题长度在 1 到 100 个字符', trigger: 'blur' },
   ],
+  slug: [{ pattern: /^[a-z0-9-]+$/, message: '只能包含小写字母、数字和连字符', trigger: 'blur' }],
+  summary: [{ max: 200, message: '摘要不能超过 200 个字符', trigger: 'blur' }],
+  content: [
+    { required: true, message: '请输入文章内容', trigger: 'blur' },
+    { min: 20, message: '内容至少 20 个字符', trigger: 'blur' },
+  ],
+  cover: [{ required: true, message: '请上传封面图片', trigger: 'change' }],
+  categoryId: [{ required: true, message: '请选择分类', trigger: 'change' }],
+  tagIds: [{ type: 'array', message: '请选择标签', trigger: 'change' }],
+  status: [{ required: true, message: '请选择状态', trigger: 'change' }],
 }
 
 /**
  * 获取文章列表
  */
-const fetcharticlelist = async () => {
+const fetchArticleList = async () => {
   loading.value = true
   try {
     const params: ArticleListParams = {
-      page: pagination.page,;
-      pageSize: pagination.pagesize,;
-      title: searchform.title,;
-      author: searchform.author,;
-      categoryId: searchform.categoryid,;
-      tagId: searchform.tagid,;
-      status: searchform.status,;
-      isTop: searchform.istop,;
-      isRecommend: searchform.isrecommend,;
-      startDate: searchform.startdate,;
-      endDate: searchform.enddate,
+      page: pagination.page,
+      pageSize: pagination.pageSize,
+      title: searchForm.title,
+      author: searchForm.author,
+      categoryId: searchForm.categoryId,
+      tagId: searchForm.tagId,
+      status: searchForm.status,
+      isTop: searchForm.isTop,
+      isRecommend: searchForm.isRecommend,
+      startDate: searchForm.startDate,
+      endDate: searchForm.endDate,
     }
 
     const result = await contentApi.getArticleList(params)
@@ -641,9 +573,7 @@ const fetcharticlelist = async () => {
     pagination.total = result.total
   } catch (error) {
     ElMessage.error('获取文章列表失败')
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -651,7 +581,7 @@ const fetcharticlelist = async () => {
 /**
  * 获取分类列表
  */
-const fetchcategories = async () => {
+const fetchCategories = async () => {
   try {
     categories.value = await contentApi.getAllCategories()
   } catch (error) {
@@ -662,7 +592,7 @@ const fetchcategories = async () => {
 /**
  * 获取标签列表
  */
-const fetchtags = async () => {
+const fetchTags = async () => {
   try {
     tags.value = await contentApi.getAllTags()
   } catch (error) {
@@ -673,7 +603,7 @@ const fetchtags = async () => {
 /**
  * 搜索
  */
-const handlesearch = () => {
+const handleSearch = () => {
   pagination.page = 1
   fetchArticleList()
 }
@@ -681,7 +611,7 @@ const handlesearch = () => {
 /**
  * 重置搜索
  */
-const handlereset = () => {
+const handleReset = () => {
   searchForm.title = ''
   searchForm.author = ''
   searchForm.categoryId = undefined
@@ -696,14 +626,14 @@ const handlereset = () => {
 /**
  * 选择变化
  */
-const handleselectionchange = (selection: Article[]) => {
+const handleSelectionChange = (selection: Article[]) => {
   selectedIds.value = selection.map((item) => item.id)
 }
 
 /**
  * 新增
  */
-const handlecreate = () => {
+const handleCreate = () => {
   isEdit.value = false
   dialogVisible.value = true
   resetForm()
@@ -712,9 +642,9 @@ const handlecreate = () => {
 /**
  * 编辑
  */
-const handleedit = async (row: Article) => {
-  isedit.value = true
-  dialogvisible.value = true
+const handleEdit = async (row: Article) => {
+  isEdit.value = true
+  dialogVisible.value = true
 
   try {
     const article = await contentApi.getArticle(row.id)
@@ -739,22 +669,16 @@ const handleedit = async (row: Article) => {
 /**
  * 删除
  */
-const handledelete = async (row: Article) => {
+const handleDelete = async (row: Article) => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除文章 "${row.title}" 吗?`,
-      '提示',
-      {
-        type: 'warning',
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除文章 "${row.title}" 吗?`, '提示', {
+      type: 'warning',
+    })
 
     await contentApi.deleteArticle(row.id)
     ElMessage.success('删除成功')
     fetchArticleList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -764,23 +688,17 @@ const handledelete = async (row: Article) => {
 /**
  * 批量删除
  */
-const handlebatchdelete = async () => {
+const handleBatchDelete = async () => {
   try {
-    await ElMessageBox.confirm(
-      `确定要删除选中的 ${selectedIds.value.length} 篇文章吗?`,
-      '提示',
-      {
-        type: 'warning',
-      }
-    )
+    await ElMessageBox.confirm(`确定要删除选中的 ${selectedIds.value.length} 篇文章吗?`, '提示', {
+      type: 'warning',
+    })
 
     await contentApi.batchDeleteArticles(selectedIds.value)
     ElMessage.success('删除成功')
     selectedIds.value = []
     fetchArticleList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败')
     }
@@ -790,7 +708,7 @@ const handlebatchdelete = async () => {
 /**
  * 提交表单
  */
-const handlesubmit = async () => {
+const handleSubmit = async () => {
   if (!formRef.value) return
 
   try {
@@ -814,9 +732,7 @@ const handlesubmit = async () => {
         isRecommend: formData.isRecommend,
       } as ArticleUpdateParams)
       ElMessage.success('更新成功')
-    }
-
- else {
+    } else {
       // 创建
       await contentApi.createArticle(formData as ArticleCreateParams)
       ElMessage.success('创建成功')
@@ -824,15 +740,11 @@ const handlesubmit = async () => {
 
     dialogVisible.value = false
     fetchArticleList()
-  }
-
- catch (error: any) {
+  } catch (error: any) {
     if (error !== 'cancel') {
       ElMessage.error(isEdit.value ? '更新失败' : '创建失败')
     }
-  }
-
- finally {
+  } finally {
     submitLoading.value = false
   }
 }
@@ -840,7 +752,7 @@ const handlesubmit = async () => {
 /**
  * 重置表单
  */
-const resetform = () => {
+const resetForm = () => {
   formData.id = undefined
   formData.title = ''
   formData.slug = ''

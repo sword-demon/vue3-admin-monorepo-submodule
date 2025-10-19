@@ -3,31 +3,23 @@
     <el-icon class="loading-icon" :size="size">
       <Loading />
     </el-icon>
-    <div v-if="text" class="loading-text">{{ text }}
-
-</div>
+    <div v-if="text" class="loading-text">{{ text }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed }
+import { computed } from 'vue'
+import { ElIcon } from 'element-plus'
+import { Loading } from '@element-plus/icons-vue'
 
- from 'vue'
-import { ElIcon }
-
- from 'element-plus'
-import { Loading }
-
- from '@element-plus/icons-vue'
-
-interface props {
+interface Props {
   /** 加载提示文本 */
   text?: string
-  /** 图标大小 */;
+  /** 图标大小 */
   size?: number
-  /** 是否全屏 */;
+  /** 是否全屏 */
   fullscreen?: boolean
-  /** 背景颜色 */;
+  /** 背景颜色 */
   background?: string
 }
 
